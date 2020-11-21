@@ -35,7 +35,7 @@ public class Main extends Application {
     private Pane pane;
     private HBox arrayBox = new HBox();
 
-    private boolean setup = false;
+    private final boolean setup = false;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
