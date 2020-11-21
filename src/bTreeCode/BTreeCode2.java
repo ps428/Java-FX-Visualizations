@@ -335,8 +335,10 @@ public class BTreeCode2 {
 
     public boolean Contain(int k) {
         if (this.Search(root, k) != null) {
+            //System.out.println("FOUND KEY: "+k);
             return true;
         } else {
+            //System.out.println("KEY "+k+" NOT FOUND");
             return false;
         }
     }

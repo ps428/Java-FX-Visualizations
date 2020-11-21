@@ -1,4 +1,4 @@
-/*
+
 package Media;
 
 import javafx.application.Application;
@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 
 import java.io.File;
 
+import static java.lang.Thread.currentThread;
 import static javafx.application.Application.launch;
 
 public class audioTest extends Application {
@@ -37,9 +38,9 @@ public class audioTest extends Application {
         addedMediaPlayer.setAutoPlay(true);
         primaryStage.setTitle("Playing Audio");
         primaryStage.show();}
-    }
+
 
     public static void main(String[] args) {
         launch(args);
     }
-}*/
+}
