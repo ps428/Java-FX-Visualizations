@@ -67,7 +67,7 @@ public class Main extends Application {
         getVertices.setStyle( "-fx-background-color:  #7289da ; -fx-text-fill:  	#ffffff ; ");
 
         resetButton.setId("reset");
-        resetButton.setStyle("-fx-base: red; -fx-text-fill: black;");
+        resetButton.setStyle("-fx-background-color: red; -fx-text-fill: black;");
         Label nullLabel = new Label();
         nullLabel.setPrefWidth(30);
 
@@ -75,7 +75,7 @@ public class Main extends Application {
 
         //todo adjust toast
         String toastMsg = "some text...";
-        int toastMsgTime = 3500; //3.5 seconds
+        int toastMsgTime = 1500; //1.5 seconds
         int fadeInTime = 500; //0.5 seconds
         int fadeOutTime= 500; //0.5 seconds
         Toast.makeText(null, toastMsg, toastMsgTime, fadeInTime, fadeOutTime);
@@ -94,7 +94,7 @@ public class Main extends Application {
 
         // Create TreePane in center
         btPane = new BTPane(windowWidth / 2, 50, bTree);
-        btPane.setPrefSize(1000, 1000);
+        btPane.setPrefSize(800, 1000);
         root.setCenter(btPane);
         btPane.setStyle("-fx-background-color:  #2c2f33;");
         insertButton.setOnMouseClicked(e -> insertValue());
@@ -108,7 +108,7 @@ public class Main extends Application {
         nextButton.setOnMouseClicked(e -> goNext());
 
         // Create a scene
-        Scene scene = new Scene(root,  1000,1000);
+        Scene scene = new Scene(root,  800,1000);
         //todo deleted css file
         primaryStage.setTitle("Pranav & Madhav's B-Tree Visualization");
         primaryStage.setScene(scene);
@@ -118,6 +118,7 @@ public class Main extends Application {
     //todo call toast on function call
     private void showHt(){
         System.out.println("Height is: "+bTree.getHeight());
+
     }
 
     private void showVertices(){
