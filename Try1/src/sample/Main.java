@@ -48,7 +48,7 @@ public class Main extends Application {
         // Button
         Button insertButton = new Button("Insert");
         Button deleteButton = new Button("Delete");
-        Button searchButton = new Button("Search");
+        Button searchButton = new Button("Find");
         Button resetButton = new Button("Reset");
         insertButton.setStyle( "-fx-background-color:  #7289da ; -fx-text-fill:  	#ffffff ; ");
         deleteButton.setStyle( "-fx-background-color:  #7289da ; -fx-text-fill:  	#ffffff ; ");
@@ -73,7 +73,7 @@ public class Main extends Application {
         btPane.setStyle("-fx-background-color:  #2c2f33;");
         insertButton.setOnMouseClicked(e -> insertValue());
         deleteButton.setOnMouseClicked(e -> deleteValue());
-        searchButton.setOnMouseClicked(e -> searchValue());
+        searchButton.setOnMouseClicked(e -> findValue());
         resetButton.setOnMouseClicked(e -> reset());
         previousButton.setOnMouseClicked(e -> goPrevious());
         nextButton.setOnMouseClicked(e -> goNext());
@@ -81,7 +81,7 @@ public class Main extends Application {
         // Create a scene
         Scene scene = new Scene(root,  720,360);
  //todo deleted css file
-        primaryStage.setTitle("B-Tree Visualization");
+        primaryStage.setTitle("Pranav & Madhav's B-Tree Visualization");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -115,7 +115,7 @@ public class Main extends Application {
             btPane.updatePane(bTreeLinkedList.get(0));
             checker();
         } catch (NumberFormatException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Illegal input data!", ButtonType.OK);
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Illegal input!", ButtonType.OK);
             alert.show();
         }
     }
@@ -125,7 +125,7 @@ public class Main extends Application {
             key = Integer.parseInt(keyText.getText());
             keyText.setText("");
             if (bTree.getNode(key) == bTree.nullBTNode) {
-                throw new Exception("Not in the tree!");
+                throw new Exception("Value not found in the tree!");
             }
             bTree.setStepTrees(new LinkedList<BTree<Integer>>());
 
@@ -136,7 +136,7 @@ public class Main extends Application {
             btPane.updatePane(bTreeLinkedList.get(0));
             checker();
         } catch (NumberFormatException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Illegal input data!", ButtonType.OK);
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Illegal input!", ButtonType.OK);
             alert.show();
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.WARNING, e.getMessage(), ButtonType.OK);
@@ -144,7 +144,7 @@ public class Main extends Application {
         }
     }
 
-    private void searchValue() {
+    private void findValue() {
         try {
             key = Integer.parseInt(keyText.getText());
             keyText.setText("");
@@ -152,7 +152,7 @@ public class Main extends Application {
             btPane.searchPathColoring(bTree, key);
 
         } catch (NumberFormatException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Illegal input data!", ButtonType.OK);
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Illegal input!", ButtonType.OK);
             alert.show();
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.WARNING, e.getMessage(), ButtonType.OK);
