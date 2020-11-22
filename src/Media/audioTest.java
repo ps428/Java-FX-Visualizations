@@ -36,4 +36,20 @@ public class audioTest{
         addedMediaPlayer.setAutoPlay(true);
 
     }
+
+    public static void foundAudio(){
+        String addedAudioPath = "/home/pranav/Desktop/Github/PPL-M2020-Assignment/src/Media/found.mp3";
+        Media addedAudioMedia = new Media(new File(addedAudioPath).toURI().toString());
+        MediaPlayer addedMediaPlayer = new MediaPlayer(addedAudioMedia);
+        addedMediaPlayer.setAutoPlay(true);
+
+    }
+
+    public static void notFoundAudio(){
+        String addedAudioPath = "/home/pranav/Desktop/Github/PPL-M2020-Assignment/src/Media/notFound.mp3";
+        Media addedAudioMedia = new Media(new File(addedAudioPath).toURI().toString());
+        MediaPlayer addedMediaPlayer = new MediaPlayer(addedAudioMedia);
+        addedMediaPlayer.setAutoPlay(true);
+
+    }
 }

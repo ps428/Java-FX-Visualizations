@@ -34,8 +34,7 @@ import javax.swing.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static Media.audioTest.addedAudio;
-import static Media.audioTest.errorAudio;
+import static Media.audioTest.*;
 
 /**
  *  The {@code BTree} class represents an ordered symbol table of generic
@@ -324,12 +323,14 @@ public class BTree<Key extends Comparable<Key>, Value> extends Application {
                 }
         );
 
-        //todo missing audio when i uncomment searchButton
-       /* AtomicInteger find= new AtomicInteger();//MADE IT ATOMIC INTEGER AS THERE WAS AN ERROR IN IDE WHEN I WAS USING A GENERAL INT INSIDE THE LAMBDA FUNCTION. THROUGH ITS RECOMMENDATION, I MADE find ATOMIC iNTEGER
+        AtomicInteger find= new AtomicInteger();//MADE IT ATOMIC INTEGER AS THERE WAS AN ERROR IN IDE WHEN I WAS USING A GENERAL INT INSIDE THE LAMBDA FUNCTION. THROUGH ITS RECOMMENDATION, I MADE find ATOMIC iNTEGER
         AtomicBoolean foundORNot = new AtomicBoolean(false);//SAME REASONING
+
+        //to-do missing audio when i uncomment searchButton :DONE was defining addButton function again instead of defining searchButton
+
         javafx.scene.control.Button searchButton = new Button("Search node");
         searchButton.setStyle("-fx-background-color: #21d4ec ; ");
-        addButton.setOnAction(event -> {
+        searchButton.setOnAction(event -> {
                     try {
                         for(int j=0;j<st.size();j++){
                             if(st.get(Integer.toString(j)).equals(field.getText())){
@@ -340,8 +341,39 @@ public class BTree<Key extends Comparable<Key>, Value> extends Application {
                             foundORNot.set(true);
                         }
 
-                        //todo change this node's color in hash map of nodes
+                        if(foundORNot.get()==true){
+                            foundAudio();
+                            //todo change this node's color in hash map of nodes
+                        }
+                        else {
+                            notFoundAudio();
+                            Alert a = new Alert(Alert.AlertType.ERROR, "Node not found.");
+                            a.show();
+                        }
+                    } catch (NumberFormatException ex) {
+                        Alert a = new Alert(Alert.AlertType.ERROR, "Must be an integer.");
+                        errorAudio();
+                        a.show();
+                    }
+                }
+        );
 
+
+        javafx.scene.control.Button deleteButton = new Button("Delete node");
+        deleteButton.setStyle("-fx-background-color: #21d4ec ; ");
+        deleteButton.setOnAction(event -> {
+                    try {
+                        for(int j=0;j<st.size();j++){
+                            if(st.get(Integer.toString(j)).equals(field.getText())){
+                                find.set(j);
+                            }
+                        }
+                        if (st.get(Integer.toString(find.get()))!=null){
+                            foundORNot.set(true);
+                        }
+
+                        //todo if found then delete this, else if not found then throw error
+                        deletedAudio();
 
                     } catch (NumberFormatException ex) {
                         Alert a = new Alert(Alert.AlertType.ERROR, "Must be an integer.");
@@ -350,10 +382,11 @@ public class BTree<Key extends Comparable<Key>, Value> extends Application {
                     }
                 }
         );
-*/
 
 
-        controls.getChildren().addAll(field, addButton);//,field2, removeButton, field3, searchButton);
+
+
+        controls.getChildren().addAll(field, addButton, deleteButton,  searchButton);
         controls.setSpacing(15.0);
         pane.getChildren().add(controls);
 
