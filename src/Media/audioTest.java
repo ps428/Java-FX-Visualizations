@@ -11,36 +11,45 @@ import java.io.File;
 import static java.lang.Thread.currentThread;
 import static javafx.application.Application.launch;
 
-public class audioTest extends Application {
+public class audioTest{
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        //
-        //Initialising path of the media file, replace this with your file path
-      String deletedAudioPath = "/home/pranav/Desktop/Github/PPL-M2020-Assignment/src/Media/deleted.mp3";
-        String addedAudioPath = "/home/pranav/Desktop/Github/PPL-M2020-Assignment/src/Media/added.mp3";
 
-        //Instantiating Media class
+    public static void deletedAudio(){
+        String deletedAudioPath = "/home/pranav/Desktop/Github/PPL-M2020-Assignment/src/Media/deleted.mp3";
         Media deletedAudioMedia = new Media(new File(deletedAudioPath).toURI().toString());
-        Media addedAudioMedia = new Media(new File(addedAudioPath).toURI().toString());
-
-        //Instantiating MediaPlayer class
         MediaPlayer deletedMediaPlayer = new MediaPlayer(deletedAudioMedia);
-        MediaPlayer addedMediaPlayer = new MediaPlayer(addedAudioMedia);
-
-        //by setting this property to true, the audio will be played
-
-        currentThread().sleep(2000);
         deletedMediaPlayer.setAutoPlay(true);
-        primaryStage.setTitle("Playing Audio");
 
-        currentThread().sleep(2000);
+    }
+    public static void addedAudio(){
+        String addedAudioPath = "/home/pranav/Desktop/Github/PPL-M2020-Assignment/src/Media/added.mp3";
+        Media addedAudioMedia = new Media(new File(addedAudioPath).toURI().toString());
+        MediaPlayer addedMediaPlayer = new MediaPlayer(addedAudioMedia);
         addedMediaPlayer.setAutoPlay(true);
-        primaryStage.setTitle("Playing Audio");
-        primaryStage.show();}
 
+    }
 
-    public static void main(String[] args) {
-        launch(args);
+    public static void errorAudio(){
+        String addedAudioPath = "/home/pranav/Desktop/Github/PPL-M2020-Assignment/src/Media/error.mp3";
+        Media addedAudioMedia = new Media(new File(addedAudioPath).toURI().toString());
+        MediaPlayer addedMediaPlayer = new MediaPlayer(addedAudioMedia);
+        addedMediaPlayer.setAutoPlay(true);
+
+    }
+
+    public static void foundAudio(){
+        String addedAudioPath = "/home/pranav/Desktop/Github/PPL-M2020-Assignment/src/Media/found.mp3";
+        Media addedAudioMedia = new Media(new File(addedAudioPath).toURI().toString());
+        MediaPlayer addedMediaPlayer = new MediaPlayer(addedAudioMedia);
+        addedMediaPlayer.setAutoPlay(true);
+
+    }
+
+    public static void notFoundAudio(){
+        String addedAudioPath = "/home/pranav/Desktop/Github/PPL-M2020-Assignment/src/Media/notFound.mp3";
+        Media addedAudioMedia = new Media(new File(addedAudioPath).toURI().toString());
+        MediaPlayer addedMediaPlayer = new MediaPlayer(addedAudioMedia);
+        addedMediaPlayer.setAutoPlay(true);
+
     }
 }
