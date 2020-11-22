@@ -28,8 +28,10 @@ public class Main extends Application {
     private int key;
     private BTPane btPane;
     private TextField keyText = new TextField();
-    private Button previousButton = new Button("Prev");
-    private Button nextButton = new Button("Next");
+
+
+    Button antecedent = new Button("Revert");
+    Button subsequent = new Button("Transform");
  //Hello
     private int index = 0;
     private LinkedList<BTree<Integer>> bTreeLinkedList = new LinkedList<BTree<Integer>>();
@@ -60,8 +62,8 @@ public class Main extends Application {
         insertButton.setStyle( "-fx-background-color:  #7289da ; -fx-text-fill:  	#ffffff ; ");
         deleteButton.setStyle( "-fx-background-color:  #7289da ; -fx-text-fill:  	#ffffff ; ");
         searchButton.setStyle( "-fx-background-color:  #7289da ; -fx-text-fill:  	#ffffff ; ");
-        nextButton.setStyle( "-fx-background-color:  #7289da ; -fx-text-fill:  	#ffffff ; ");
-        previousButton.setStyle( "-fx-background-color:  #7289da ; -fx-text-fill:  	#ffffff ; ");
+        subsequent.setStyle( "-fx-background-color:  #7289da ; -fx-text-fill:  	#ffffff ; ");
+        antecedent.setStyle( "-fx-background-color:  #7289da ; -fx-text-fill:  	#ffffff ; ");
         getHT.setStyle( "-fx-background-color:  #7289da ; -fx-text-fill:  	#ffffff ; ");
         getVertices.setStyle( "-fx-background-color:  #7289da ; -fx-text-fill:  	#ffffff ; ");
 
@@ -96,7 +98,7 @@ public class Main extends Application {
         root.setTop(tf);*/
 
         hBox.getChildren().addAll(basic, keyText, insertButton, deleteButton, searchButton,
-                resetButton, nullLabel,previousButton,nextButton, getHT, getVertices);
+                resetButton, nullLabel, antecedent, subsequent, getHT, getVertices);
         hBox.setAlignment(Pos.CENTER);
         checker();
 
@@ -112,8 +114,8 @@ public class Main extends Application {
         getHT.setOnMouseClicked(e-> showHt());
         getVertices.setOnMouseClicked(e-> showVertices());
 
-        previousButton.setOnMouseClicked(e -> goPrevious());
-        nextButton.setOnMouseClicked(e -> goNext());
+        antecedent.setOnMouseClicked(e -> goPrevious());
+        subsequent.setOnMouseClicked(e -> goNext());
 
         // Create a scene
         Scene scene = new Scene(root,  800,800);
@@ -139,17 +141,17 @@ public class Main extends Application {
 
     private void checker() {
         if (index > 0 && index < bTreeLinkedList.size() - 1) {
-            previousButton.setVisible(true);
-            nextButton.setVisible(true);
+            antecedent.setVisible(true);
+            subsequent.setVisible(true);
         } else if (index > 0 && index == bTreeLinkedList.size() - 1) {
-            previousButton.setVisible(true);
-            nextButton.setVisible(false);
+            antecedent.setVisible(true);
+            subsequent.setVisible(false);
         } else if (index == 0 && index < bTreeLinkedList.size() - 1) {
-            previousButton.setVisible(false);
-            nextButton.setVisible(true);
+            antecedent.setVisible(false);
+            subsequent.setVisible(true);
         } else {
-            previousButton.setVisible(false);
-            nextButton.setVisible(false);
+            antecedent.setVisible(false);
+            subsequent.setVisible(false);
         }
     }
 
@@ -163,7 +165,7 @@ public class Main extends Application {
             verticesCount++;
             index = 0;
             bTreeLinkedList = bTree.getStepTrees();
-            btPane.updatePane(bTreeLinkedList.get(0));
+            btPane.paneUpdater(bTreeLinkedList.get(0));
             checker();
         } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Illegal input!", ButtonType.OK);
@@ -195,7 +197,7 @@ public class Main extends Application {
 
             index = 0;
             bTreeLinkedList = bTree.getStepTrees();
-            btPane.updatePane(bTreeLinkedList.get(0));
+            btPane.paneUpdater(bTreeLinkedList.get(0));
             checker();
         } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Illegal input!", ButtonType.OK);
@@ -220,7 +222,7 @@ public class Main extends Application {
             key = Integer.parseInt(keyText.getText());
             keyText.setText("");
 
-            btPane.searchPathColoring(bTree, key);
+            btPane.FindNode(bTree, key);
 
         } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Illegal input!", ButtonType.OK);
@@ -243,7 +245,7 @@ public class Main extends Application {
     private void goPrevious() {
         if (index > 0) {
             index--;
-            btPane.updatePane(bTreeLinkedList.get(index));
+            btPane.paneUpdater(bTreeLinkedList.get(index));
 
             checker();
         }
@@ -253,7 +255,7 @@ public class Main extends Application {
         if (index < bTreeLinkedList.size() - 1) {
             index++;
             System.out.println("index: " + index + " - size: " + bTreeLinkedList.size());
-            btPane.updatePane(bTreeLinkedList.get(index));
+            btPane.paneUpdater(bTreeLinkedList.get(index));
 
             checker();
         }
@@ -265,7 +267,7 @@ public class Main extends Application {
         bTree.setRoot(null);
         index = 0;
         bTreeLinkedList.clear();
-        btPane.updatePane(bTree);
+        btPane.paneUpdater(bTree);
         checker();
 
         restartAudio();//added audio

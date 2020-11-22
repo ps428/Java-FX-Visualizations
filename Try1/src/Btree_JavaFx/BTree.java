@@ -3,7 +3,7 @@ package Btree_JavaFx;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.ArrayList;
-import Cloner.CloneUtils;
+import Utility.nodeCopy;
 
 //Todo check serializable interface and cloneUtils
 
@@ -251,7 +251,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
             fullNode.addKey(fullNodeSize, key);
 
         System.out.println("Insert key in between");
-        stepTrees.add(CloneUtils.clone(this));
+        stepTrees.add(nodeCopy.clone(this));
         return getHalfKeys(fullNode);
     }
 
@@ -327,7 +327,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
 
         System.out.println("Enter the key in the middle of the meeting");
 
-        stepTrees.add(CloneUtils.clone(this));
+        stepTrees.add(nodeCopy.clone(this));
     }
 
 
@@ -342,7 +342,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
             root.addChild(1, nullBTNode);
 
             System.out.println("root inserted");
-            stepTrees.add(CloneUtils.clone(this));
+            stepTrees.add(nodeCopy.clone(this));
             return;
         }
 
@@ -376,7 +376,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
                     treeSize++;
 
                     System.out.println("Inserted in the node");
-                    stepTrees.add(CloneUtils.clone(this));
+                    stepTrees.add(nodeCopy.clone(this));
                     return;
                 } else {
                     i++;
@@ -387,7 +387,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
             treeSize++;
 
             System.out.println("Inserted at the end of node");
-            stepTrees.add(CloneUtils.clone(this));
+            stepTrees.add(nodeCopy.clone(this));
         } else {
 
             BTNode<K> newChildNode = getHalfKeys(key, currentNode);
@@ -408,7 +408,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
 
             System.out.println("Move the key in the middle of nowhere");
 
-            stepTrees.add(CloneUtils.clone(this));
+            stepTrees.add(nodeCopy.clone(this));
 
             // If on current, child node cap is higher
             // and node entered on
@@ -420,7 +420,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
                         currentNode = currentNode.getFather();
 
                         System.out.println("Key inserted in between");
-                        stepTrees.add(CloneUtils.clone(this));
+                        stepTrees.add(nodeCopy.clone(this));
 
                         if (currentNode.isOverflow()) {
                             processOverflow(currentNode);
@@ -476,7 +476,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
                     node.removeChild(0);
                 }
                 System.out.println("Case 2a:");
-                stepTrees.add(CloneUtils.clone(this));
+                stepTrees.add(nodeCopy.clone(this));
 
             } else {
                 pair = fatherNode.getKey(nodeIndex - 1);
@@ -491,7 +491,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
                     node.removeChild(0);
                 }
                 System.out.println("Case 2a:");
-                stepTrees.add(CloneUtils.clone(this));
+                stepTrees.add(nodeCopy.clone(this));
             }
             return node;
         } else {
@@ -515,7 +515,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
                 // Case 2b.1
                 System.out.println("Case 2b: Merging");
 //				stepMess.add("Merging");
-                stepTrees.add(CloneUtils.clone(this));
+                stepTrees.add(nodeCopy.clone(this));
             } else {
                 currentNode.addKey(currentNode.getSize(), fatherNode.getKey(nodeIndex - 1));
                 fatherNode.removeKey(nodeIndex - 1);
@@ -535,7 +535,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
                     currentNode.getChild(currentNodeSize + i).setFather(currentNode);
                 }
                 System.out.println("Case 2b: Merging");
-                stepTrees.add(CloneUtils.clone(this));
+                stepTrees.add(nodeCopy.clone(this));
             }
             return fatherNode;
         }
@@ -560,7 +560,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
             node.removeKey(index + 1);
             index = currentNode.getSize() - 1;
             System.out.println("Replaced single child");
-            stepTrees.add(CloneUtils.clone(this));
+            stepTrees.add(nodeCopy.clone(this));
         } else {
             node.addKey(index + 1, currentNode.getKey(0));
             currentNode.removeKey(0);
@@ -569,7 +569,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
             index = 0;
             // Case 3b
             System.out.println("Replaced");
-            stepTrees.add(CloneUtils.clone(this));
+            stepTrees.add(nodeCopy.clone(this));
         }
         return currentNode;
     }
@@ -583,7 +583,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
      */
     public void delete(K key) {
         System.out.println("--------------------------------------\nDelete\n--------------------------------------");
-        stepTrees.add(CloneUtils.clone(this));
+        stepTrees.add(nodeCopy.clone(this));
         BTNode<K> node = getNode(key);
         BTNode<K> deleteNode = null;
         if (node.equals(nullBTNode)) // node not found
@@ -595,7 +595,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
             treeSize--;
 
             System.out.println("Deleted");
-            stepTrees.add(CloneUtils.clone(this));
+            stepTrees.add(nodeCopy.clone(this));
         } else {
             boolean flag = true;
             boolean isReplaced = false;
@@ -657,7 +657,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
                 treeSize--;
 
                 System.out.println("Deleted :" + key);
-                stepTrees.add(CloneUtils.clone(this));
+                stepTrees.add(nodeCopy.clone(this));
             }
         }
     }
