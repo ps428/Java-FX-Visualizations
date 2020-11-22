@@ -21,6 +21,7 @@ import Btree_JavaFx.BTree;
 import Btree_JavaFx.BTPane;
 
 
+import static Media.audioTest.*;
 import static javafx.scene.paint.Color.rgb;
 
 public class Main extends Application {
@@ -56,12 +57,14 @@ public class Main extends Application {
         Button searchButton = new Button("Find");
         Button resetButton = new Button("Reset");
         Button getHT = new Button(("Show Height"));
-        getHT.setStyle( "-fx-background-color:  #7289da ; -fx-text-fill:  	#ffffff ; ");
+        Button getVertices = new Button(("Show Vertices"));
         insertButton.setStyle( "-fx-background-color:  #7289da ; -fx-text-fill:  	#ffffff ; ");
         deleteButton.setStyle( "-fx-background-color:  #7289da ; -fx-text-fill:  	#ffffff ; ");
         searchButton.setStyle( "-fx-background-color:  #7289da ; -fx-text-fill:  	#ffffff ; ");
         nextButton.setStyle( "-fx-background-color:  #7289da ; -fx-text-fill:  	#ffffff ; ");
         previousButton.setStyle( "-fx-background-color:  #7289da ; -fx-text-fill:  	#ffffff ; ");
+        getHT.setStyle( "-fx-background-color:  #7289da ; -fx-text-fill:  	#ffffff ; ");
+        getVertices.setStyle( "-fx-background-color:  #7289da ; -fx-text-fill:  	#ffffff ; ");
 
         resetButton.setId("reset");
         resetButton.setStyle("-fx-base: red; -fx-text-fill: black;");
@@ -69,10 +72,6 @@ public class Main extends Application {
         nullLabel.setPrefWidth(30);
 
 
-        String heightOfTree="";
-        heightOfTree=String.valueOf(bTree.getHeight());
-        String numberOfVertices = "";
-        numberOfVertices=String.valueOf(bTree.getVerticesNumber());
 
         //todo adjust toast
         String toastMsg = "some text...";
@@ -85,16 +84,11 @@ public class Main extends Application {
 //todo change font type
         System.out.println(Font.getFontNames());
         Text basic = new Text("Enter a number: ");
-        basic.setFont(Font.font("Times New Roman", FontWeight.BOLD, FontPosture.ITALIC,  15));
-        Text height = new Text("Height: "+heightOfTree);
-        height.setFont(Font.font("Times New Roman", FontWeight.BOLD, FontPosture.ITALIC,  15));
-        Text verticesNumber = new Text("Number of Vertices: "+numberOfVertices);
-        verticesNumber.setFont(Font.font("Verdana", FontWeight.BOLD, FontPosture.ITALIC,  15));
 
 
 
         hBox.getChildren().addAll(basic, keyText, insertButton, deleteButton, searchButton,
-                resetButton, nullLabel,previousButton,nextButton, getHT, verticesNumber);
+                resetButton, nullLabel,previousButton,nextButton, getHT, getVertices);
         hBox.setAlignment(Pos.CENTER);
         checker();
 
@@ -108,6 +102,8 @@ public class Main extends Application {
         searchButton.setOnMouseClicked(e -> findValue());
         resetButton.setOnMouseClicked(e -> reset());
         getHT.setOnMouseClicked(e-> showHt());
+        getVertices.setOnMouseClicked(e-> showVertices());
+
         previousButton.setOnMouseClicked(e -> goPrevious());
         nextButton.setOnMouseClicked(e -> goNext());
 
@@ -119,10 +115,15 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    //todo call toast on function call
     private void showHt(){
-        System.out.println("Height is:"+bTree.getHeight());
-
+        System.out.println("Height is: "+bTree.getHeight());
     }
+
+    private void showVertices(){
+        System.out.println("Vertices are: "+bTree.getVerticesNumber());
+    }
+
     private void checker() {
         if (index > 0 && index < bTreeLinkedList.size() - 1) {
             previousButton.setVisible(true);
@@ -156,6 +157,15 @@ public class Main extends Application {
             alert.show();
         }
 
+        try {
+            addedAudio();//TODO audio not audible
+
+        } catch (NumberFormatException ex) {
+            Alert a = new Alert(Alert.AlertType.ERROR, "Must be an integer.");
+            errorAudio();
+            a.show();
+        }
+
     }
 
     private void deleteValue() {
@@ -180,6 +190,15 @@ public class Main extends Application {
             Alert alert = new Alert(Alert.AlertType.WARNING, e.getMessage(), ButtonType.OK);
             alert.show();
         }
+
+        try {
+            deletedAudio();//
+
+        } catch (NumberFormatException ex) {
+            Alert a = new Alert(Alert.AlertType.ERROR, "Must be an integer.");
+            errorAudio();
+            a.show();
+        }
     }
 
     private void findValue() {
@@ -195,6 +214,15 @@ public class Main extends Application {
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.WARNING, e.getMessage(), ButtonType.OK);
             alert.show();
+        }
+
+        try {
+            foundAudio();//TODO audio not audible
+
+        } catch (NumberFormatException ex) {
+            Alert a = new Alert(Alert.AlertType.ERROR, "Must be an integer.");
+            errorAudio();
+            a.show();
         }
     }
 
@@ -225,5 +253,9 @@ public class Main extends Application {
         bTreeLinkedList.clear();
         btPane.updatePane(bTree);
         checker();
+
+        restartAudio();//added audio
     }
+
+
 }

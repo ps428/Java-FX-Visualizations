@@ -190,14 +190,19 @@ public class BTree<K extends Comparable<K>> implements Serializable {
         return height;
     }
 
+    //todo check infinite lopp for vertices
     public int getVertices(BTNode<K> node){
         int vertices = 0;
         BTNode<K> currentNode = node;
-        while (!currentNode.equals(nullBTNode)) {
-            vertices += currentNode.getChild(0).getSize();
-            vertices += currentNode.getChild(1).getSize();
-            vertices += currentNode.getChild(2).getSize();
-        }
+        int i=0;
+        /*while (!currentNode.equals(nullBTNode)) {
+            if(!currentNode.getChild(i).isNull())
+            {
+                vertices += currentNode.getChild(i).getSize();
+                i++;
+            }
+
+        }*/
         return vertices;
     }
     //Todo count no. of vertices, currentnode.getchild.size;
