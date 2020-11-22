@@ -94,7 +94,7 @@ public class Main extends Application {
 
         // Create TreePane in center
         btPane = new BTPane(windowWidth / 2, 50, bTree);
-        btPane.setPrefSize(800, 1000);
+        btPane.setPrefSize(800, 800);
         root.setCenter(btPane);
         btPane.setStyle("-fx-background-color:  #2c2f33;");
         insertButton.setOnMouseClicked(e -> insertValue());
@@ -108,10 +108,11 @@ public class Main extends Application {
         nextButton.setOnMouseClicked(e -> goNext());
 
         // Create a scene
-        Scene scene = new Scene(root,  800,1000);
+        Scene scene = new Scene(root,  800,800);
         //todo deleted css file
         primaryStage.setTitle("Pranav & Madhav's B-Tree Visualization");
         primaryStage.setScene(scene);
+        primaryStage.setFullScreen(true);
         primaryStage.show();
     }
 
