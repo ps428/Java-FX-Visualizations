@@ -118,11 +118,14 @@ public class Main extends Application {
     //todo call toast on function call
     private void showHt(){
         System.out.println("Height is: "+bTree.getHeight());
-
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Height is: "+bTree.getHeight(), ButtonType.OK);
+        alert.show();
     }
 
     private void showVertices(){
         System.out.println("Vertices are: "+bTree.getVerticesNumber());
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Vertices are: "+bTree.getVerticesNumber(), ButtonType.OK);
+        alert.show();
     }
 
     private void checker() {
