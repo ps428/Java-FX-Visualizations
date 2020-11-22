@@ -16,6 +16,8 @@ import javafx.stage.Stage;
 import Btree_JavaFx.BTree;
 import Btree_JavaFx.BTreePane;
 
+import javax.xml.soap.Text;
+
 import static javafx.scene.paint.Color.rgb;
 
 public class Main extends Application {
@@ -62,7 +64,7 @@ public class Main extends Application {
         nullLabel.setPrefWidth(30);
 
         hBox.getChildren().addAll(new Label("Enter a number: "), keyText, insertButton, deleteButton, searchButton,
-                resetButton, nullLabel,previousButton,nextButton);
+                resetButton, nullLabel,previousButton,nextButton, new Label("Height: "), new Label(" Vertices: "));
         hBox.setAlignment(Pos.CENTER);
         checker();
 
@@ -79,8 +81,8 @@ public class Main extends Application {
         nextButton.setOnMouseClicked(e -> goNext());
 
         // Create a scene
-        Scene scene = new Scene(root,  720,360);
- //todo deleted css file
+        Scene scene = new Scene(root,  1000,1000);
+        //todo deleted css file
         primaryStage.setTitle("Pranav & Madhav's B-Tree Visualization");
         primaryStage.setScene(scene);
         primaryStage.show();

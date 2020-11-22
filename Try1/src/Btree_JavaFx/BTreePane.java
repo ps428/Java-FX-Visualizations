@@ -35,10 +35,11 @@ public class BTreePane extends Pane {
     /*
      * Draw Tree & Node
      */
+    //TODO change initial location of tree from here
     public void updatePane(BTree<Integer> bTree) {
         this.getChildren().clear();
         this.bTree = bTree;
-        DrawBTree(bTree.getRoot(), originalX, originalY);
+        DrawBTree(bTree.getRoot(), originalX+100, originalY+100);
     }
 
     private void DrawNode(String s, double x, double y, Color color) {
