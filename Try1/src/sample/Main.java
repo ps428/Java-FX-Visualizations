@@ -20,7 +20,7 @@ import Btree_JavaFx.BTree;
 import Btree_JavaFx.BTPane;
 
 import static Media.audioTest.*;
-import static javafx.scene.paint.Color.rgb;
+import static javafx.scene.paint.Color.*;
 
 public class Main extends Application {
 
@@ -83,8 +83,17 @@ public class Main extends Application {
 //todo change font type
         System.out.println(Font.getFontNames());
         Text basic = new Text("Enter a number: ");
+        Font f1 = Font.font("Verdana", FontWeight.BOLD, FontPosture.ITALIC, 18);
+        basic.setFill(DARKORCHID);
+        basic.setFont(f1);
+      /*  TextFlow tf = new TextFlow();
+        Text basic2 = new Text(" B Tree ");
+        basic2.setFill(DARKTURQUOISE);
+        tf.setTextAlignment(TextAlignment.CENTER);
+        tf.setLineSpacing(22.0);
+        tf.getChildren().add(basic2);
 
-
+        root.setTop(tf);*/
 
         hBox.getChildren().addAll(basic, keyText, insertButton, deleteButton, searchButton,
                 resetButton, nullLabel,previousButton,nextButton, getHT, getVertices);
