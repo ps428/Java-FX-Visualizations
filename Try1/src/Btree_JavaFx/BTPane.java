@@ -26,8 +26,9 @@ public class BTPane extends Pane {
     private final int rowSpace = 60;
 
     public BTPane(double x, double y, BTree<Integer> bTree) {
-        this.originalX = x+100;
-        this.originalY = y+100;
+        this.originalX = x+200;
+        //Todo change location from here +200
+        this.originalY = y+200;
         this.bTree = bTree;
     }
 
