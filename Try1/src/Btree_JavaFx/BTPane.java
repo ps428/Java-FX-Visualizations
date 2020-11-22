@@ -40,14 +40,14 @@ public class BTPane extends Pane {
     }
 
     private void DrawNode(String s, double x, double y, Color color) {
-        Rectangle rect = new Rectangle(x, y, rectangleWidth, rectangleWidth);
-        rect.setFill(color);
-        rect.setStroke(Color.rgb(35, 39, 42)  );
-        rect.setArcHeight(10); rect.setArcWidth(10);
+        Rectangle node = new Rectangle(x, y, rectangleWidth, rectangleWidth);
+        node.setFill(color);
+        node.setStroke(Color.rgb(35, 39, 42)  );
+        node.setArcHeight(10); node.setArcWidth(10);
         Text txt = new Text(x + 11 - s.length(), y + 20, s);
         txt.setFill(Color. 	rgb(20, 1, 0)  );
         txt.setFont(Font.font("Times New Roman", FontWeight.EXTRA_BOLD, fontSize));
-        this.getChildren().addAll(rect, txt);
+        this.getChildren().addAll(node, txt);
     }
 
     private void DrawBTree(Btree_JavaFx.BTNode<Integer> root, double x, double y) {
@@ -60,41 +60,39 @@ public class BTPane extends Pane {
             double startY = y + 2 * fontSize;
             if (!root.isLastInternalNode()) {
                 for (int i = 0; i < root.getChildren().size(); i++) {
-                    // startX, endX = start, end of Line
-                    // startX2 = start of child nodes
-                    double startX = x + i * rectangleWidth;
-                    double startX2 = 0, endX = 0;
+                    double eol = x + i * rectangleWidth; //end of Line
+                    double soc = 0, endX = 0;   // start of child nodes
 
                     if ((double) i > ((double) root.getSize()) / 2) {
                         // TODO: fix
-                        startX2 = startX
+                        soc = eol
                                 + (bTree.getOrder() - 1) * (bTree.getHeight(root.getChild(i))-1) * rectangleWidth / 2;
-                        endX = startX2 + ((double) root.getChild(i).getSize()) / 2 * rectangleWidth;
+                        endX = soc + ((double) root.getChild(i).getSize()) / 2 * rectangleWidth;
                     } else if ((double) i < ((double) root.getSize()) / 2) {
-                        endX = startX - (bTree.getOrder() - 1) * (bTree.getHeight(root.getChild(i))-1) * rectangleWidth / 2
+                        endX = eol - (bTree.getOrder() - 1) * (bTree.getHeight(root.getChild(i))-1) * rectangleWidth / 2
                                 - ((double) root.getChild(i).getSize()) / 2 * rectangleWidth;
-                        startX2 = endX - ((double) root.getChild(i).getSize()) / 2 * rectangleWidth;
+                        soc = endX - ((double) root.getChild(i).getSize()) / 2 * rectangleWidth;
                     } else {
-                        startX2 = startX - ((double) root.getChild(i).getSize()) / 2 * rectangleWidth;
-                        endX = startX;
+                        soc = eol - ((double) root.getChild(i).getSize()) / 2 * rectangleWidth;
+                        endX = eol;
                     }
-                    // Chu y trong truong hop temp tree
+
                     if (i == 0) {
-                        startX2 -= rectangleWidth * 2;
+                        soc -= rectangleWidth * 2;
                         endX -= rectangleWidth * 2;
                     } else if (i == root.getSize()) {
-                        startX2 += rectangleWidth * 2;
+                        soc += rectangleWidth * 2;
                         endX += rectangleWidth * 2;
                     }
 
-                    // Draw child nodes
+
                     if (!root.getChild(i).isNull()) {
-                        Line line = new Line(startX, startY, endX, y + rowSpace);
+                        Line line = new Line(eol, startY, endX, y + rowSpace);
                         line.setStroke(Color.rgb(240, 216, 122) );
                         line.setStrokeWidth(1.5);
                         this.getChildren().add(line);
                     }
-                    DrawBTree(root.getChild(i), startX2, y + rowSpace);
+                    DrawBTree(root.getChild(i), soc, y + rowSpace);   // Draw child nodes
                 }
             }
         }
@@ -109,7 +107,7 @@ public class BTPane extends Pane {
             while (!currentNode.equals(bTree.nullBTNode)) {
                 int i = 0;
                 while (i < currentNode.getSize()) {
-                    makeNodeAnimation(currentNode.getKey(i).toString(), x, y, delay);
+                    nodeDesign(currentNode.getKey(i).toString(), x, y, delay);
                     delay+= 1;
                     // so sanh voi key can tim
                     if (currentNode.getKey(i).equals(key)) {
@@ -130,12 +128,11 @@ public class BTPane extends Pane {
                         currentNode = currentNode.getChild(i);
                         i = 0;
                     } else {
-                        // di den key tiep theo trong node
-                        i++;
+                        i++;  //next child
                         x += rectangleWidth;
                     }
                 }
-                // di xuong key ben phai cua node
+
                 if (!currentNode.isNull()) {
                     y += rowSpace;
                     x = x + (bTree.getOrder() - 1) * (bTree.getHeight(currentNode.getChild(i))-1) * rectangleWidth / 2
@@ -145,13 +142,13 @@ public class BTPane extends Pane {
                 }
             }
         }
-        throw new Exception("Not in the tree!");
+        throw new Exception("Not available in the tree!");
     }
 
 
 
     // TODO: refactor
-    private void makeNodeAnimation(String s, double x, double y, double delay) {
+    private void nodeDesign(String s, double x, double y, double delay) {
         // Draw a node
         Rectangle rect = new Rectangle(x, y, rectangleWidth, rectangleWidth);
         rect.setFill(Color.web("#6ab5ff"));

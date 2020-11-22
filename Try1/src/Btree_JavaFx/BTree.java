@@ -223,8 +223,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
         if (fullNodeSize == fullNode.getSize())
             fullNode.addKey(fullNodeSize, key);
 
-        System.out.println("Insert key into the meeting location");
-//		stepMess.add("Insert " + key + " into the meeting position");
+        System.out.println("Insert key in between");
         stepTrees.add(CloneUtils.clone(this));
         return getHalfKeys(fullNode);
     }
@@ -306,7 +305,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
 
 
     public void insert(K key) {
-        // If tree is empty
+
         if (isEmpty()) {
             root = new BTNode<K>(order);
             root.addKey(0, key);
@@ -325,8 +324,8 @@ public class BTree<K extends Comparable<K>> implements Serializable {
         while (!currentNode.isLastInternalNode()) {
             int i = 0;
             while (i < currentNode.getSize()) {
-                // break if currentNode is leaf
-                if (currentNode.isLastInternalNode()) {
+
+                if (currentNode.isLastInternalNode()) { // break if currentNode is leaf
                     i = currentNode.getSize();
                 } else if (currentNode.getKey(i).compareTo(key) > 0) {
                     currentNode = currentNode.getChild(i);
@@ -339,41 +338,38 @@ public class BTree<K extends Comparable<K>> implements Serializable {
                 currentNode = currentNode.getChild(currentNode.getSize());
         }
 
-        // If node is not full then insert non full
+
         if (!currentNode.isFull()) {
             int i = 0;
             while (i < currentNode.getSize()) {
-                //insert any location due to the key> insertKey
+                //insertion when key> insertKey
                 if (currentNode.getKey(i).compareTo(key) > 0) {
                     currentNode.addKey(i, key);
                     currentNode.addChild(currentNode.getSize(), nullBTNode);
                     treeSize++;
 
-                    System.out.println("Insert non full");
+                    System.out.println("Inserted in the node");
                     stepTrees.add(CloneUtils.clone(this));
                     return;
                 } else {
                     i++;
                 }
             }
-            //insert at the end of the node
             currentNode.addKey(currentNode.getSize(), key);
             currentNode.addChild(currentNode.getSize(), nullBTNode);
             treeSize++;
 
-            System.out.println("Insert non full v2");
+            System.out.println("Inserted at the end of node");
             stepTrees.add(CloneUtils.clone(this));
         } else {
-            // If node is full
-            // Insert node into the desired location in do node
-            //push 1/2 key + child in node
+
             BTNode<K> newChildNode = getHalfKeys(key, currentNode);
-            for (int i = 0; i < halfNumber; i++) {
+            for (int i = 0; i < halfNumber; i++) { // insert after bottom up split
                 newChildNode.addChild(i, currentNode.getChild(0));
                 currentNode.removeChild(0);
             }
             newChildNode.addChild(halfNumber, nullBTNode);
-
+ // todo ye htadein?
 // Lay a half-hybrid, just like that, the current node will be a hybrid of the middle key
 // Move up 1 item (used to be the father)
             BTNode<K> originalFatherNode = getRestOfHalfKeys(currentNode);
@@ -396,10 +392,9 @@ public class BTree<K extends Comparable<K>> implements Serializable {
                         mergeWithFatherNode(currentNode);
                         currentNode = currentNode.getFather();
 
-                        System.out.println("The insert key has been entered into the meeting location");
+                        System.out.println("Key inserted in between");
                         stepTrees.add(CloneUtils.clone(this));
 
-                        // If you come back for a full test, repeat your activities
                         if (currentNode.isOverflow()) {
                             processOverflow(currentNode);
                         }
@@ -433,7 +428,6 @@ public class BTree<K extends Comparable<K>> implements Serializable {
         BTNode<K> currentNode;
         if (nodeIndex == 0) {
             currentNode = fatherNode.getChild(1);
-            // node (bi xoa) co phai o ngoai cung ben trai ko (index 0)
             flag = true;
         } else {
             currentNode = fatherNode.getChild(nodeIndex - 1);
@@ -454,9 +448,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
                 if (node.isLastInternalNode()) {
                     node.removeChild(0);
                 }
-//				System.out.println("BA1");
                 System.out.println("Case 2a:");
-//				stepMess.add(" ");
                 stepTrees.add(CloneUtils.clone(this));
 
             } else {
@@ -471,9 +463,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
                 if (node.isLastInternalNode()) {
                     node.removeChild(0);
                 }
-//				System.out.println("BA2");
                 System.out.println("Case 2a:");
-//				stepMess.add(" ");
                 stepTrees.add(CloneUtils.clone(this));
             }
             return node;
@@ -517,9 +507,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
                     currentNode.addChild(currentNodeSize + i, node.getChild(i));
                     currentNode.getChild(currentNodeSize + i).setFather(currentNode);
                 }
-                // Case 2b.2
                 System.out.println("Case 2b: Merging");
-//				stepMess.add("Merging");
                 stepTrees.add(CloneUtils.clone(this));
             }
             return fatherNode;
@@ -534,7 +522,6 @@ public class BTree<K extends Comparable<K>> implements Serializable {
         }
 
         if (currentNode.getSize() - 1 < halfNumber) {
-            // Thay the bang con trai gan nhat (lon nhat)
             currentNode = node.getChild(index);
             int currentNodeSize = currentNode.getSize();
             while (!currentNode.isLastInternalNode()) {
@@ -545,20 +532,16 @@ public class BTree<K extends Comparable<K>> implements Serializable {
             currentNode.addKey(currentNodeSize - 1, node.getKey(index + 1));
             node.removeKey(index + 1);
             index = currentNode.getSize() - 1;
-            // Case 3a
-            System.out.println("Case 3a: Thay the bang con trai gan nhat (lon nhat)");
-//			stepMess.add("Thay the bang con trai gan nhat (lon nhat)");
+            System.out.println("Replaced single child");
             stepTrees.add(CloneUtils.clone(this));
         } else {
-            // Thay the bang con phai gan nhat (nho nhat)
             node.addKey(index + 1, currentNode.getKey(0));
             currentNode.removeKey(0);
             currentNode.addKey(0, node.getKey(index));
             node.removeKey(index);
             index = 0;
             // Case 3b
-            System.out.println("Case 3b: Thay the bang con phai gan nhat (nho nhat)");
-//			stepMess.add("Thay the bang con phai gan nhat (nho nhat)");
+            System.out.println("Replaced");
             stepTrees.add(CloneUtils.clone(this));
         }
         return currentNode;
@@ -566,27 +549,25 @@ public class BTree<K extends Comparable<K>> implements Serializable {
 
 
 
-    /*
+    /* // todo cases
      * Case 1: If k is in the node x which is a leaf and x.size -1 >= halfNumber
      * Case 2: If k is in the node x which is a leaf and x.size -1 < halfNumber Case
      * 3: If k is in the node x and x is an internal node (not a leaf)
      */
     public void delete(K key) {
         System.out.println("--------------------------------------\nDelete\n--------------------------------------");
-//		stepMess.add("Cay ban dau");
         stepTrees.add(CloneUtils.clone(this));
-        // Tim kiem node chua key
         BTNode<K> node = getNode(key);
         BTNode<K> deleteNode = null;
-        if (node.equals(nullBTNode))
+        if (node.equals(nullBTNode)) // node not found
             return;
 
-        // Neu la root, cay 1 node 1 key -> Xoa luon
-        if (node.equals(root) && node.getSize() == 1 && node.isLastInternalNode()) {
+
+        if (node.equals(root) && node.getSize() == 1 && node.isLastInternalNode()) { // if it is root
             root = null;
             treeSize--;
 
-            System.out.println("Xoa goc");
+            System.out.println("Deleted");
             stepTrees.add(CloneUtils.clone(this));
         } else {
             boolean flag = true;
@@ -598,9 +579,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
                 isReplaced = true;
             }
 
-            // Neu xoa lam anh huong den do cao cay
             if (node.getSize() - 1 < halfNumber) {
-//				System.out.println("Case 2:");
                 // TODO: case 2
                 node = balanceDeletedNode(node);
                 if (isReplaced) {
@@ -615,13 +594,12 @@ public class BTree<K extends Comparable<K>> implements Serializable {
                 }
             } else if (node.isLastInternalNode()) {
                 // TODO: Case 1
-                System.out.println("Case 1: Delete");
+                System.out.println("Deleted");
                 node.removeChild(0);
             }
 
             while (!node.getChild(0).equals(root) && node.getSize() < halfNumber && flag) {
-//				System.out.println("Debug3");
-                System.out.println("This is case 3c: Recursively delete");
+                System.out.println("delete");
                 if (node.equals(root)) {
                     for (int i = 0; i <= root.getSize(); i++) {
                         if (root.getChild(i).getSize() == 0) {
@@ -638,14 +616,12 @@ public class BTree<K extends Comparable<K>> implements Serializable {
             }
 
             if (deleteNode == null) {
-                // Ktra xem da xoa truoc do chua hay moi chi rebalance/ replace
                 node = getNode(key);
             } else {
                 node = deleteNode;
             }
 
             if (!node.equals(nullBTNode)) {
-                // Sau khi replace xong thi xoa node di (khi do, node da tro thanh la)
                 for (int i = 0; i < node.getSize(); i++) {
                     if (node.getKey(i) == key) {
                         node.removeKey(i);
@@ -653,7 +629,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
                 }
                 treeSize--;
 
-                System.out.println("Xoa " + key);
+                System.out.println("Deleted :" + key);
                 stepTrees.add(CloneUtils.clone(this));
             }
         }

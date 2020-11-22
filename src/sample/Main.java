@@ -24,8 +24,6 @@ import javafx.util.Duration;
 import java.io.File;
 import java.util.ArrayList;
 
-import static com.sun.javafx.scene.control.skin.Utils.getResource;
-import static java.lang.Thread.currentThread;
 
 public class Main extends Application {
 
