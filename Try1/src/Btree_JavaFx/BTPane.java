@@ -17,24 +17,21 @@ import javafx.util.Duration;
 
 import java.util.LinkedList;
 
-public class BTreePane extends Pane {
+public class BTPane extends Pane {
     private Btree_JavaFx.BTree<Integer> bTree;
     private double originalX, originalY;
-
     // TODO: make node size relate to pane's size
     private final int fontSize = 14;
     private final int rectangleWidth = 30;
     private final int rowSpace = 60;
 
-    public BTreePane(double x, double y, BTree<Integer> bTree) {
+    public BTPane(double x, double y, BTree<Integer> bTree) {
         this.originalX = x;
         this.originalY = y;
         this.bTree = bTree;
     }
 
-    /*
-     * Draw Tree & Node
-     */
+
     //TODO change initial location of tree from here
     public void updatePane(BTree<Integer> bTree) {
         this.getChildren().clear();
@@ -151,9 +148,7 @@ public class BTreePane extends Pane {
         throw new Exception("Not in the tree!");
     }
 
-    /*
-     * Draw Animation
-     */
+
 
     // TODO: refactor
     private void makeNodeAnimation(String s, double x, double y, double delay) {
@@ -189,7 +184,7 @@ class BTWindow extends BorderPane {
 
 
     private int key;
-    private BTreePane btPane;
+    private BTPane btPane;
     private TextField keyText = new TextField();
     private Button previousButton = new Button("Prev");
     private Button nextButton = new Button("Next");
@@ -206,7 +201,7 @@ class BTWindow extends BorderPane {
     }
 
     public void run() {
-        // Create button HBox on top
+
         HBox hBox = new HBox(15);
         this.setTop(hBox);
         BorderPane.setMargin(hBox, new Insets(10, 10, 10, 10));
@@ -228,17 +223,14 @@ class BTWindow extends BorderPane {
         hBox.setAlignment(Pos.CENTER);
         checkVisible();
 
-        // Create TreePane in center
         // TODO: chinh lai x, y theo size window
-        btPane = new BTreePane(windowWidth / 2, 50, bTree);
+        btPane = new BTPane(windowWidth / 2, 50, bTree);
         btPane.setPrefSize(1000, 1000);
-//				bTreeLinkedList.add(CloneUtils.clone(bTree))
-//	    			;
         this.setCenter(btPane);
 
         insertButton.setOnMouseClicked(e -> insertValue());
         deleteButton.setOnMouseClicked(e -> deleteValue());
-        searchButton.setOnMouseClicked(e -> searchValue());
+        searchButton.setOnMouseClicked(e -> findValue());
         resetButton.setOnMouseClicked(e -> reset());
         previousButton.setOnMouseClicked(e -> goPrevious());
         nextButton.setOnMouseClicked(e -> goNext());
@@ -278,6 +270,23 @@ class BTWindow extends BorderPane {
         }
     }
 
+    private void findValue() {
+        try {
+            key = Integer.parseInt(keyText.getText());
+            keyText.setText("");
+
+            btPane.searchPathColoring(bTree, key);
+
+        } catch (NumberFormatException e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Illegal input data!", ButtonType.OK);
+            alert.show();
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, e.getMessage(), ButtonType.OK);
+            alert.show();
+        }
+    }
+
+
     private void deleteValue() {
         try {
             key = Integer.parseInt(keyText.getText());
@@ -302,21 +311,7 @@ class BTWindow extends BorderPane {
         }
     }
 
-    private void searchValue() {
-        try {
-            key = Integer.parseInt(keyText.getText());
-            keyText.setText("");
 
-            btPane.searchPathColoring(bTree, key);
-
-        } catch (NumberFormatException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Illegal input data!", ButtonType.OK);
-            alert.show();
-        } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, e.getMessage(), ButtonType.OK);
-            alert.show();
-        }
-    }
 
     private void goPrevious() {
         if (index > 0) {

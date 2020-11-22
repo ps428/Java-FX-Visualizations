@@ -14,7 +14,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import Btree_JavaFx.BTree;
-import Btree_JavaFx.BTreePane;
+import Btree_JavaFx.BTPane;
 
 import javax.xml.soap.Text;
 
@@ -23,11 +23,11 @@ import static javafx.scene.paint.Color.rgb;
 public class Main extends Application {
 
     private int key;
-    private BTreePane btPane;
+    private BTPane btPane;
     private TextField keyText = new TextField();
     private Button previousButton = new Button("Prev");
     private Button nextButton = new Button("Next");
-
+ //Hello
     private int index = 0;
     private LinkedList<BTree<Integer>> bTreeLinkedList = new LinkedList<BTree<Integer>>();
     private BTree<Integer> bTree = new BTree<Integer>(3);
@@ -69,7 +69,7 @@ public class Main extends Application {
         checker();
 
         // Create TreePane in center
-        btPane = new BTreePane(windowWidth / 2, 50, bTree);
+        btPane = new BTPane(windowWidth / 2, 50, bTree);
         btPane.setPrefSize(1000, 1000);
         root.setCenter(btPane);
         btPane.setStyle("-fx-background-color:  #2c2f33;");
