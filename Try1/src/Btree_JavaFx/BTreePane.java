@@ -44,11 +44,11 @@ public class BTreePane extends Pane {
     private void DrawNode(String s, double x, double y, Color color) {
         Rectangle rect = new Rectangle(x, y, rectangleWidth, rectangleWidth);
         rect.setFill(color);
-        rect.setStroke(Color.WHITESMOKE);
+        rect.setStroke(Color.rgb(35, 39, 42)  );
         rect.setArcHeight(10); rect.setArcWidth(10);
         Text txt = new Text(x + 11 - s.length(), y + 20, s);
-        txt.setFill(Color.PURPLE);
-        txt.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, fontSize));
+        txt.setFill(Color. 	rgb(20, 1, 0)  );
+        txt.setFont(Font.font("Times New Roman", FontWeight.EXTRA_BOLD, fontSize));
         this.getChildren().addAll(rect, txt);
     }
 
@@ -56,7 +56,7 @@ public class BTreePane extends Pane {
         if (root != null) {
             // Draw keys of node
             for (int i = 0; i < root.getSize(); i++) {
-                DrawNode(root.getKey(i).toString(), x + i * rectangleWidth, y, Color.web("#6ab5ff"));
+                DrawNode(root.getKey(i).toString(), x + i * rectangleWidth, y, Color.rgb(140, 211, 255) );
             }
             // Draw line
             double startY = y + 2 * fontSize;
@@ -92,7 +92,7 @@ public class BTreePane extends Pane {
                     // Draw child nodes
                     if (!root.getChild(i).isNull()) {
                         Line line = new Line(startX, startY, endX, y + rowSpace);
-                        line.setStroke(Color.SILVER);
+                        line.setStroke(Color.rgb(240, 216, 122) );
                         line.setStrokeWidth(1.5);
                         this.getChildren().add(line);
                     }
@@ -186,11 +186,13 @@ class BTWindow extends BorderPane {
     private int windowHeight;
     private int windowWidth;
 
+
     private int key;
     private BTreePane btPane;
     private TextField keyText = new TextField();
     private Button previousButton = new Button("Prev");
     private Button nextButton = new Button("Next");
+
 
     private int index = 0;
     private LinkedList<BTree<Integer>> bTreeLinkedList = new LinkedList<Btree_JavaFx.BTree<Integer>>();
@@ -228,8 +230,9 @@ class BTWindow extends BorderPane {
         // Create TreePane in center
         // TODO: chinh lai x, y theo size window
         btPane = new BTreePane(windowWidth / 2, 50, bTree);
-        btPane.setPrefSize(windowHeight, windowWidth);
-//				bTreeLinkedList.add(CloneUtils.clone(bTree));
+        btPane.setPrefSize(1000, 1000);
+//				bTreeLinkedList.add(CloneUtils.clone(bTree))
+//	    			;
         this.setCenter(btPane);
 
         insertButton.setOnMouseClicked(e -> insertValue());

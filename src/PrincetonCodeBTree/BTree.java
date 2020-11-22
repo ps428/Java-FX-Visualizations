@@ -305,12 +305,12 @@ public class BTree<Key extends Comparable<Key>, Value> extends Application {
                     try {
                         int tmp =Integer.parseInt(field.getText());
                         st.put(Integer.toString(i),Integer.toString(tmp));
-                        try {
+                        //try {
                             addedAudio();
-                        }
-                        catch (Exception ex) {
-                            JOptionPane.showMessageDialog(null, ex);
-                        }
+                       // }
+                        /*catch (Exception ex) {
+                          //  JOptionPane.showMessageDialog(null, ex);
+                        }*/
                        // primaryStage.show();
                         i++;
 
@@ -332,6 +332,7 @@ public class BTree<Key extends Comparable<Key>, Value> extends Application {
         searchButton.setStyle("-fx-background-color: #21d4ec ; ");
         searchButton.setOnAction(event -> {
                     try {
+                        foundORNot.set(false);
                         for(int j=0;j<st.size();j++){
                             if(st.get(Integer.toString(j)).equals(field.getText())){
                                 find.set(j);
@@ -341,7 +342,7 @@ public class BTree<Key extends Comparable<Key>, Value> extends Application {
                             foundORNot.set(true);
                         }
 
-                        if(foundORNot.get()==true){
+                        if(foundORNot.get()){
                             foundAudio();
                             //todo change this node's color in hash map of nodes
                         }

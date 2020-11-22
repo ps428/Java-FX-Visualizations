@@ -13,16 +13,17 @@ import static javafx.application.Application.launch;
 
 public class audioTest{
 
+    private static String location = "/home/pranav/Desktop/Github/PPL-M2020-Assignment/src/Media/";//location to folder of mp3 files;
 
     public static void deletedAudio(){
-        String deletedAudioPath = "/home/pranav/Desktop/Github/PPL-M2020-Assignment/src/Media/deleted.mp3";
+        String deletedAudioPath = location+"deleted.mp3";
         Media deletedAudioMedia = new Media(new File(deletedAudioPath).toURI().toString());
         MediaPlayer deletedMediaPlayer = new MediaPlayer(deletedAudioMedia);
         deletedMediaPlayer.setAutoPlay(true);
 
     }
     public static void addedAudio(){
-        String addedAudioPath = "/home/pranav/Desktop/Github/PPL-M2020-Assignment/src/Media/added.mp3";
+        String addedAudioPath = location+"added.mp3";
         Media addedAudioMedia = new Media(new File(addedAudioPath).toURI().toString());
         MediaPlayer addedMediaPlayer = new MediaPlayer(addedAudioMedia);
         addedMediaPlayer.setAutoPlay(true);
@@ -30,7 +31,7 @@ public class audioTest{
     }
 
     public static void errorAudio(){
-        String addedAudioPath = "/home/pranav/Desktop/Github/PPL-M2020-Assignment/src/Media/error.mp3";
+        String addedAudioPath = location+"error.mp3";
         Media addedAudioMedia = new Media(new File(addedAudioPath).toURI().toString());
         MediaPlayer addedMediaPlayer = new MediaPlayer(addedAudioMedia);
         addedMediaPlayer.setAutoPlay(true);
@@ -38,7 +39,7 @@ public class audioTest{
     }
 
     public static void foundAudio(){
-        String addedAudioPath = "/home/pranav/Desktop/Github/PPL-M2020-Assignment/src/Media/found.mp3";
+        String addedAudioPath = location+"found.mp3";
         Media addedAudioMedia = new Media(new File(addedAudioPath).toURI().toString());
         MediaPlayer addedMediaPlayer = new MediaPlayer(addedAudioMedia);
         addedMediaPlayer.setAutoPlay(true);
@@ -46,7 +47,7 @@ public class audioTest{
     }
 
     public static void notFoundAudio(){
-        String addedAudioPath = "/home/pranav/Desktop/Github/PPL-M2020-Assignment/src/Media/notFound.mp3";
+        String addedAudioPath = location+"notFound.mp3";
         Media addedAudioMedia = new Media(new File(addedAudioPath).toURI().toString());
         MediaPlayer addedMediaPlayer = new MediaPlayer(addedAudioMedia);
         addedMediaPlayer.setAutoPlay(true);
