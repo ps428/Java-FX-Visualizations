@@ -21,7 +21,7 @@ public class BTPane extends Pane {
     private Btree_JavaFx.BTree<Integer> bTree;
     private double originalX, originalY;
     private final int fontSize = 14;
-    private final int rectangleWidth = 30;
+    private final int rectangleWidth = 50;
     private final int rowSpace = 60;
 
     public BTPane(double x, double y, BTree<Integer> bTree) {
@@ -42,8 +42,8 @@ public class BTPane extends Pane {
         Rectangle node = new Rectangle(x, y, rectangleWidth, rectangleWidth);
         node.setFill(color);
         node.setStroke(Color.rgb(35, 39, 42)  );
-        node.setArcHeight(10); node.setArcWidth(10);
-        Text txt = new Text(x + 11 - s.length(), y + 20, s);
+        node.setArcHeight(15); node.setArcWidth(20);
+        Text txt = new Text(x + 18 - s.length(), y + 30, s);
         txt.setFill(Color. 	rgb(20, 1, 0)  );
         txt.setFont(Font.font("Times New Roman", FontWeight.EXTRA_BOLD, fontSize));
         this.getChildren().addAll(node, txt);
@@ -152,8 +152,8 @@ public class BTPane extends Pane {
         Rectangle rect = new Rectangle(x, y, rectangleWidth, rectangleWidth);
         rect.setFill(Color.web("#6ab5ff"));
         rect.setStroke(Color.WHITESMOKE);
-        rect.setArcHeight(10); rect.setArcWidth(10);
-        Text txt = new Text(x + 11 - s.length(), y + 20, s);
+        rect.setArcHeight(15); rect.setArcWidth(20);
+        Text txt = new Text(x + 18 - s.length(), y + 30, s);
         txt.setFill(Color.WHITE);
         txt.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, fontSize));
         this.getChildren().addAll(rect, txt);
