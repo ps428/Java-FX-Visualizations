@@ -1,5 +1,6 @@
 package sample;
-
+//remove/ add audio in these lines
+//167 171, 226,231 201,205  263
 import java.util.LinkedList;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -12,20 +13,18 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.*;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
 import Btree_JavaFx.BTree;
 import Btree_JavaFx.BTPane;
-
 
 import static Media.audioTest.*;
 import static javafx.scene.paint.Color.rgb;
 
 public class Main extends Application {
 
+    private int verticesCount;
     private int key;
     private BTPane btPane;
     private TextField keyText = new TextField();
@@ -124,8 +123,8 @@ public class Main extends Application {
     }
 
     private void showVertices(){
-        System.out.println("Vertices are: "+bTree.getVerticesNumber());
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Vertices are: "+bTree.getVerticesNumber(), ButtonType.OK);
+        System.out.println("Vertices are: "+verticesCount);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Vertices are: "+verticesCount, ButtonType.OK);
         alert.show();
     }
 
@@ -152,7 +151,7 @@ public class Main extends Application {
             bTree.setStepTrees(new LinkedList<BTree<Integer>>());
 
             bTree.insert(key);
-
+            verticesCount++;
             index = 0;
             bTreeLinkedList = bTree.getStepTrees();
             btPane.updatePane(bTreeLinkedList.get(0));
@@ -183,6 +182,7 @@ public class Main extends Application {
             bTree.setStepTrees(new LinkedList<BTree<Integer>>());
 
             bTree.delete(key);
+            verticesCount--;
 
             index = 0;
             bTreeLinkedList = bTree.getStepTrees();

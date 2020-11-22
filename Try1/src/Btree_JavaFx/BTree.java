@@ -196,13 +196,17 @@ public class BTree<K extends Comparable<K>> implements Serializable {
         BTNode<K> currentNode = node;
         int i=0;
         /*while (!currentNode.equals(nullBTNode)) {
-            if(!currentNode.getChild(i).isNull())
+            if(!(currentNode.getChild(i).isNull()))
             {
                 vertices += currentNode.getChild(i).getSize();
                 i++;
             }
-
+            currentNode = currentNode.getChild(i);
+            System.out.println("--------------"+vertices);
         }*/
+        vertices = currentNode.getSize();
+
+
         return vertices;
     }
     //Todo count no. of vertices, currentnode.getchild.size;

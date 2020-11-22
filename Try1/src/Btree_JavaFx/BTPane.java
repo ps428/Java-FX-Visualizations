@@ -20,20 +20,18 @@ import java.util.LinkedList;
 public class BTPane extends Pane {
     private Btree_JavaFx.BTree<Integer> bTree;
     private double originalX, originalY;
-    // TODO: make node size relate to pane's size
     private final int fontSize = 14;
     private final int rectangleWidth = 30;
     private final int rowSpace = 60;
 
     public BTPane(double x, double y, BTree<Integer> bTree) {
         this.originalX = x+200;
-        //Todo change location from here +200
+        //Todo change location from here +200 :DONE
         this.originalY = y+200;
         this.bTree = bTree;
     }
 
 
-    //TODO change initial location of tree from here
     public void updatePane(BTree<Integer> bTree) {
         this.getChildren().clear();
         this.bTree = bTree;
