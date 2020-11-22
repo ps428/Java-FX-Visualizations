@@ -88,14 +88,6 @@ public class Main extends Application {
         Font f1 = Font.font("Verdana", FontWeight.BOLD, FontPosture.ITALIC, 18);
         basic.setFill(DARKORCHID);
         basic.setFont(f1);
-      /*  TextFlow tf = new TextFlow();
-        Text basic2 = new Text(" B Tree ");
-        basic2.setFill(DARKTURQUOISE);
-        tf.setTextAlignment(TextAlignment.CENTER);
-        tf.setLineSpacing(22.0);
-        tf.getChildren().add(basic2);
-
-        root.setTop(tf);*/
 
         hBox.getChildren().addAll(basic, keyText, insertButton, deleteButton, searchButton,
                 resetButton, nullLabel, antecedent, subsequent, getHT, getVertices);

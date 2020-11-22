@@ -12,7 +12,7 @@ class BTNode<E extends Comparable<E>> implements Serializable {
     private int fullNumber;
     private BTNode<E> father;
     private ArrayList<BTNode<E>> children = new ArrayList<BTNode<E>>();
-    private ArrayList<E> keys = new ArrayList<>(); //Todo type of araylist
+    private ArrayList<E> keys = new ArrayList<>();
 
     public BTNode() {
     }
@@ -115,7 +115,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
     public BTree(int order) {
         if (order < 3) {
             try {
-                throw new Exception("B-tree's order can not lower than 3");
+                throw new Exception("Order of B Tree should be more than 2");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -190,7 +190,6 @@ public class BTree<K extends Comparable<K>> implements Serializable {
         return height;
     }
 
-    //todo check infinite lopp for vertices
     public int getVertices(BTNode<K> node){
         int vertices = 0;
         BTNode<K> currentNode = node;
@@ -209,7 +208,6 @@ public class BTree<K extends Comparable<K>> implements Serializable {
 
         return vertices;
     }
-    //Todo count no. of vertices, currentnode.getchild.size;
 
     public BTNode<K> getNode(K key) {
         if (isEmpty()) {
@@ -396,7 +394,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
                 currentNode.removeChild(0);
             }
             newChildNode.addChild(halfNumber, nullBTNode);
- // todo ye htadein?
+ // todo ye comment htadein?
 // Lay a half-hybrid, just like that, the current node will be a hybrid of the middle key
 // Move up 1 item (used to be the father)
             BTNode<K> originalFatherNode = getRestOfHalfKeys(currentNode);
