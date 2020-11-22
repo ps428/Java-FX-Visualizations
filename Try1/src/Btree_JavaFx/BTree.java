@@ -172,6 +172,13 @@ public class BTree<K extends Comparable<K>> implements Serializable {
             return getHeight(root);
         }
     }
+    public int getVerticesNumber() {
+        if (isEmpty()) {
+            return 0;
+        } else {
+            return getVertices(root);
+        }
+    }
 
     public int getHeight(BTNode<K> node) {
         int height = 0;
@@ -181,6 +188,17 @@ public class BTree<K extends Comparable<K>> implements Serializable {
             height++;
         }
         return height;
+    }
+
+    public int getVertices(BTNode<K> node){
+        int vertices = 0;
+        BTNode<K> currentNode = node;
+        while (!currentNode.equals(nullBTNode)) {
+            vertices += currentNode.getChild(0).getSize();
+            vertices += currentNode.getChild(1).getSize();
+            vertices += currentNode.getChild(2).getSize();
+        }
+        return vertices;
     }
     //Todo count no. of vertices, currentnode.getchild.size;
 

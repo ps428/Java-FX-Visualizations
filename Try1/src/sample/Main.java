@@ -12,11 +12,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.*;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import javafx.scene.text.Text;
 import Btree_JavaFx.BTree;
 import Btree_JavaFx.BTPane;
 
-import javax.xml.soap.Text;
 
 import static javafx.scene.paint.Color.rgb;
 
@@ -52,6 +55,8 @@ public class Main extends Application {
         Button deleteButton = new Button("Delete");
         Button searchButton = new Button("Find");
         Button resetButton = new Button("Reset");
+        Button getHT = new Button(("Show Height"));
+        getHT.setStyle( "-fx-background-color:  #7289da ; -fx-text-fill:  	#ffffff ; ");
         insertButton.setStyle( "-fx-background-color:  #7289da ; -fx-text-fill:  	#ffffff ; ");
         deleteButton.setStyle( "-fx-background-color:  #7289da ; -fx-text-fill:  	#ffffff ; ");
         searchButton.setStyle( "-fx-background-color:  #7289da ; -fx-text-fill:  	#ffffff ; ");
@@ -63,8 +68,33 @@ public class Main extends Application {
         Label nullLabel = new Label();
         nullLabel.setPrefWidth(30);
 
-        hBox.getChildren().addAll(new Label("Enter a number: "), keyText, insertButton, deleteButton, searchButton,
-                resetButton, nullLabel,previousButton,nextButton, new Label("Height: "), new Label(" Vertices: "));
+
+        String heightOfTree="";
+        heightOfTree=String.valueOf(bTree.getHeight());
+        String numberOfVertices = "";
+        numberOfVertices=String.valueOf(bTree.getVerticesNumber());
+
+        //todo adjust toast
+        String toastMsg = "some text...";
+        int toastMsgTime = 3500; //3.5 seconds
+        int fadeInTime = 500; //0.5 seconds
+        int fadeOutTime= 500; //0.5 seconds
+        Toast.makeText(null, toastMsg, toastMsgTime, fadeInTime, fadeOutTime);
+
+
+//todo change font type
+        System.out.println(Font.getFontNames());
+        Text basic = new Text("Enter a number: ");
+        basic.setFont(Font.font("Times New Roman", FontWeight.BOLD, FontPosture.ITALIC,  15));
+        Text height = new Text("Height: "+heightOfTree);
+        height.setFont(Font.font("Times New Roman", FontWeight.BOLD, FontPosture.ITALIC,  15));
+        Text verticesNumber = new Text("Number of Vertices: "+numberOfVertices);
+        verticesNumber.setFont(Font.font("Verdana", FontWeight.BOLD, FontPosture.ITALIC,  15));
+
+
+
+        hBox.getChildren().addAll(basic, keyText, insertButton, deleteButton, searchButton,
+                resetButton, nullLabel,previousButton,nextButton, getHT, verticesNumber);
         hBox.setAlignment(Pos.CENTER);
         checker();
 
@@ -77,6 +107,7 @@ public class Main extends Application {
         deleteButton.setOnMouseClicked(e -> deleteValue());
         searchButton.setOnMouseClicked(e -> findValue());
         resetButton.setOnMouseClicked(e -> reset());
+        getHT.setOnMouseClicked(e-> showHt());
         previousButton.setOnMouseClicked(e -> goPrevious());
         nextButton.setOnMouseClicked(e -> goNext());
 
@@ -88,6 +119,10 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    private void showHt(){
+        System.out.println("Height is:"+bTree.getHeight());
+
+    }
     private void checker() {
         if (index > 0 && index < bTreeLinkedList.size() - 1) {
             previousButton.setVisible(true);
@@ -120,6 +155,7 @@ public class Main extends Application {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Illegal input!", ButtonType.OK);
             alert.show();
         }
+
     }
 
     private void deleteValue() {

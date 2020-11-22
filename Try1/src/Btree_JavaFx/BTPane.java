@@ -26,8 +26,8 @@ public class BTPane extends Pane {
     private final int rowSpace = 60;
 
     public BTPane(double x, double y, BTree<Integer> bTree) {
-        this.originalX = x;
-        this.originalY = y;
+        this.originalX = x+100;
+        this.originalY = y+100;
         this.bTree = bTree;
     }
 
@@ -36,7 +36,7 @@ public class BTPane extends Pane {
     public void updatePane(BTree<Integer> bTree) {
         this.getChildren().clear();
         this.bTree = bTree;
-        DrawBTree(bTree.getRoot(), originalX+100, originalY+100);
+        DrawBTree(bTree.getRoot(), originalX, originalY);
     }
 
     private void DrawNode(String s, double x, double y, Color color) {
