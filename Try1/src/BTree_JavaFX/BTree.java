@@ -173,45 +173,44 @@ public class BTree<K extends Comparable<K>> implements Serializable {
         }
     }
 
-    //todo imp get ht
     public int getHeight(BTNode<K> node) {
         int height = 0;
         BTNode<K> currentNode = node;
-        while (!currentNode.equals(nullBTNode)) {
-            currentNode = currentNode.getTheChildAtIndex(0);
+        while (!currentNode.equals(nullBTNode)) {//iterate over nodes till we reach end of tree
+            currentNode = currentNode.getTheChildAtIndex(0);//set current node as the first children of the current node
             height++;
         }
         return height;
     }
 
 
-    //todo imp get node
     public BTNode<K> getNode(K key) {
         if (isEmpty()) {
             return nullBTNode;
         }
         BTNode<K> currentNode = root;
-        while (!currentNode.equals(nullBTNode)) {
+        while (!currentNode.equals(nullBTNode)) {//iterate over nodes till we reach end of the tree
             int i = 0;
-            while (i < currentNode.getSize()) {
-                if (currentNode.getKey(i).equals(key)) {
+            while (i < currentNode.getSize()) {//iterate over keys of the node
+                if (currentNode.getKey(i).equals(key)) {//if the key is equal to the present key, return it
                     index = i;
                     return currentNode;
-                } else if (currentNode.getKey(i).compareTo(key) > 0) {
+                } else if (currentNode.getKey(i).compareTo(key) > 0) {//if the key is less than the current key, go to the children of ith key
                     currentNode = currentNode.getTheChildAtIndex(i);
                     i = 0;
-                } else {
+                } else {//if the key is more than the current key, go to next key of the current node
                     i++;
                 }
             }
-            if (!currentNode.isNull()) {
+            if (!currentNode.isNull()) {//if current node is not null, then get to the last children node of current node
                 currentNode = currentNode.getTheChildAtIndex(currentNode.getSize());
             }
         }
         return nullBTNode;
     }
 
-     BTNode<K> getHalfKeys(K key, BTNode<K> fullNode) {
+    //todo imp getHalfKeys
+    BTNode<K> getHalfKeys(K key, BTNode<K> fullNode) {
         int fullNodeSize = fullNode.getSize();
 
         //Add node to the desired location
@@ -280,7 +279,8 @@ public class BTree<K extends Comparable<K>> implements Serializable {
     }
 
      void processOverflow(BTNode<K> currentNode) {
-        BTNode<K> newNode = getHalfKeys(currentNode);
+        BTNode<K> newNode = getHalfKeys(currentNode);//make a new node that has jus the half of elements of currentNode
+
         for (int i = 0; i <= newNode.getSize(); i++) {
             newNode.addChild(i, currentNode.getTheChildAtIndex(0));
             currentNode.removeChild(0);
@@ -295,7 +295,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
 
         System.out.println("Enter the key in the middle. This is caused due to overflow");
 
-        stTrees.add(nodeCopy.clone(this));
+        stTrees.add(nodeCopy.clone(this));//todo nodeCopy used here
     }
 
 

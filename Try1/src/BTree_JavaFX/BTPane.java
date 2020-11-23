@@ -130,17 +130,17 @@ public class BTPane extends Pane {
                 MakeNode(root.getKey(i).toString(), x + i * 50, y );
             }
             // Draw line...IMP: making the lines that connect the nodes
-            double lineY = y + 2 * 14;
+            double lineY = y + 2 * 14;//making the y coordinate of first line at centre of the root node
             if (!root.trueIfLastInternalNode()) {
-                for (int i = 0; i < root.getChildren().size(); i++) {
-                    double eol = x + i * 50; //end of Line
+                for (int i = 0; i < root.getChildren().size(); i++) {//iterating over the children of root node
+                    double eol = x + i * 50; //end of Line x coordinate
                     double soc = 0, eox = 0;   // start of child nodes
 
-                    if ((double) i > ((double) root.getSize()) / 2) {
+                    if ((double) i > ((double) root.getSize()) / 2) {//if i i.e. the key index is more than half of the node size, then set soc=eol+((order-1)*ht from that node *difference between keys/2
                         soc = eol
                                 + (bTree.getOrder() - 1) * (bTree.getHeight(root.getTheChildAtIndex(i))-1) * 50.0 / 2;
                         eox = soc + ((double) root.getTheChildAtIndex(i).getSize()) / 2 * 50;
-                    } else if ((double) i < ((double) root.getSize()) / 2) {
+                    } else if ((double) i < ((double) root.getSize()) / 2) {//if i i.e. the key index is more than half of node size, i.e. i is at right half of the node, then set
                         eox = eol - (bTree.getOrder() - 1) * (bTree.getHeight(root.getTheChildAtIndex(i))-1) * 50.0 / 2
                                 - ((double) root.getTheChildAtIndex(i).getSize()) / 2 * 50;
                         soc = eox - ((double) root.getTheChildAtIndex(i).getSize()) / 2 * 50;
@@ -149,21 +149,22 @@ public class BTPane extends Pane {
                         eox = eol;
                     }
 
-                    if (i == 0) {
+                    if (i == 0) {//whenever we get to a new node, i will be 0, there set soc and eox as follows
                         soc -= 50 * 2;
                         eox -= 50 * 2;
-                    } else if (i == root.getSize()) {
+                    } else if (i == root.getSize()) {//if i goes beyond the last element of the node, then shift the eoc to next line
                         soc += 50 * 2;
                         eox += 50 * 2;
                     }
 
-                    if (!root.getTheChildAtIndex(i).isNull()) {
+                    if (!root.getTheChildAtIndex(i).isNull()) {//make lines with above coordinates
                         Line line = new Line(eol, lineY, eox, y + 60);
                         line.setStroke(Color.rgb(240, 216, 122) );
                         line.setStrokeWidth(1.5);
                         this.getChildren().add(line);
                     }
-                    makeBTree(root.getTheChildAtIndex(i), soc, y + 60);   // Draw child nodes
+                    //incrementing y by 60, going down the tree
+                    makeBTree(root.getTheChildAtIndex(i), soc, y + 60);   // recursively calling the makeBTree till we reach end of tree
                 }
             }
         }
