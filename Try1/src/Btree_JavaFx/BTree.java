@@ -10,10 +10,10 @@ import Utility.nodeCopy;
 //node class
 class BTNode<E extends Comparable<E>> implements Serializable {
 
-    private int fNumber;
-    private BTNode<E> parent;
-    private ArrayList<BTNode<E>> children = new ArrayList<BTNode<E>>();
-    private ArrayList<E> keys = new ArrayList<>();
+     int fNumber;
+     BTNode<E> parent;
+     ArrayList<BTNode<E>> children = new ArrayList<BTNode<E>>();
+     ArrayList<E> keys = new ArrayList<>();
 
     public BTNode() {
     }
@@ -94,12 +94,12 @@ class BTNode<E extends Comparable<E>> implements Serializable {
 //tree class
 public class BTree<K extends Comparable<K>> implements Serializable {
 
-    private int hNumber;
-    private BTNode<K> root = null;
-    private int order, index, treeSize;
+     int hNumber;
+     BTNode<K> root = null;
+     int order, index, treeSize;
     public final BTNode<K> nullBTNode = new BTNode<K>();
 
-    private LinkedList<BTree<K>> stTrees = new LinkedList<BTree<K>>();//making a linked list of trees
+     LinkedList<BTree<K>> stTrees = new LinkedList<BTree<K>>();//making a linked list of trees
 
     public BTree(int order) {
         if (order < 3) {
@@ -211,7 +211,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
         return nullBTNode;
     }
 
-    private BTNode<K> getHalfKeys(K key, BTNode<K> fullNode) {
+     BTNode<K> getHalfKeys(K key, BTNode<K> fullNode) {
         int fullNodeSize = fullNode.getSize();
 
         //Add node to the desired location
@@ -229,7 +229,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
         return getHalfKeys(fullNode);
     }
 
-    private BTNode<K> getHalfKeys(BTNode<K> fullNode) {
+     BTNode<K> getHalfKeys(BTNode<K> fullNode) {
         BTNode<K> newNode = new BTNode<K>(order);
         for (int i = 0; i < hNumber; i++) {
             newNode.addKey(i, fullNode.getKey(0));
@@ -238,7 +238,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
         return newNode;
     }
 
-    private BTNode<K> getRestOfHalfKeys(BTNode<K> halfNode) {
+     BTNode<K> getRestOfHalfKeys(BTNode<K> halfNode) {
         BTNode<K> newNode = new BTNode<K>(order);
         int halfNodeSize = halfNode.getSize();
         for (int i = 0; i < halfNodeSize; i++) {
@@ -252,14 +252,14 @@ public class BTree<K extends Comparable<K>> implements Serializable {
         return newNode;
     }
 
-    private void mergeWithFatherNode(BTNode<K> childNode, int index) {
+     void mergeWithFatherNode(BTNode<K> childNode, int index) {
         childNode.getParent().addKey(index, childNode.getKey(0));
         childNode.getParent().removeChild(index);
         childNode.getParent().addChild(index, childNode.getTheChildAtIndex(0));
         childNode.getParent().addChild(index + 1, childNode.getTheChildAtIndex(1));
     }
 
-    private void mergeWithFatherNode(BTNode<K> childNode) {
+     void mergeWithFatherNode(BTNode<K> childNode) {
         int fatherNodeSize = childNode.getParent().getSize();
         for (int i = 0; i < fatherNodeSize; i++) {
             if (childNode.getParent().getKey(i).compareTo(childNode.getKey(0)) > 0) {
@@ -274,12 +274,12 @@ public class BTree<K extends Comparable<K>> implements Serializable {
             childNode.getParent().getTheChildAtIndex(i).setParent(childNode.getParent());
     }
 
-    private void setSplitFatherNode(BTNode<K> node) {
+     void setSplitFatherNode(BTNode<K> node) {
         for (int i = 0; i <= node.getSize(); i++)
             node.getTheChildAtIndex(i).setParent(node);
     }
 
-    private void processOverflow(BTNode<K> currentNode) {
+     void processOverflow(BTNode<K> currentNode) {
         BTNode<K> newNode = getHalfKeys(currentNode);
         for (int i = 0; i <= newNode.getSize(); i++) {
             newNode.addChild(i, currentNode.getTheChildAtIndex(0));
@@ -400,7 +400,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
     }
 
 
-    private int findChild(BTNode<K> node) {
+     int findChild(BTNode<K> node) {
         if (!node.equals(root)) {
             BTNode<K> fatherNode = node.getParent();
 
@@ -413,7 +413,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
     }
 
 
-    private BTNode<K> balanceDeletedNode(BTNode<K> node) {
+     BTNode<K> balanceDeletedNode(BTNode<K> node) {
         boolean flag;
         int nodeIndex = findChild(node);
         K pair;
@@ -508,7 +508,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
     }
 
 
-    private BTNode<K> replaceNode(BTNode<K> node) {
+     BTNode<K> replaceNode(BTNode<K> node) {
         BTNode<K> currentNode = node.getTheChildAtIndex(index + 1);
         while (!currentNode.trueIfLastInternalNode()) {
             currentNode = currentNode.getTheChildAtIndex(0);

@@ -2,6 +2,9 @@ package sample;
 //remove/ add audio in these lines
 //155 164 180 190 194 205 209 213 243
 import java.util.LinkedList;
+import java.util.concurrent.TimeUnit;
+
+import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -14,28 +17,30 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.*;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
 import Btree_JavaFx.BTree;
 import Btree_JavaFx.BTPane;
+import javafx.util.Duration;
 
 import static Media.audioTest.*;
 import static javafx.scene.paint.Color.*;
 
 public class Main extends Application {
 
-    private int verticesCount;
-    private int key;
-    private BTPane btPane;
-    private TextField keyText = new TextField();
+     int verticesCount;
+     int key;
+     BTPane btPane;
+     TextField keyText = new TextField();
 
 
     Button antecedent = new Button("Revert");
     Button subsequent = new Button("Transform");
  //Hello
-    private int index = 0;
-    private LinkedList<BTree<Integer>> bTreeLinkedList = new LinkedList<BTree<Integer>>();
-    private BTree<Integer> bTree = new BTree<Integer>(3);
+     int index = 0;
+     LinkedList<BTree<Integer>> bTreeLinkedList = new LinkedList<BTree<Integer>>();
+     BTree<Integer> bTree = new BTree<Integer>(3);
 
     @Override
     public void start(Stage primaryStage) {
@@ -114,20 +119,56 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    void showNotification(String inp){
+        Alert notification = new Alert(Alert.AlertType.INFORMATION, inp, ButtonType.CLOSE);
+        notification.setX(1200);
+        notification.setY(700);
+        notification.setHeaderText("Notification: Task Successful");
+        notification.show();
+//todo add notifications here...add close automatically part
+       /* try {
+            TimeUnit.SECONDS.sleep(1);
+        }
+        catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        notification.close();*/
+
+        /* Stage stage1 = new Stage();
+        stage1.setTitle("Creating popup");
+
+        Label label =new Label(inp);
+        label.setStyle(" -fx-background-color: white;");
+        Popup popup = new Popup();
+        popup.getContent().add(label);
+        popup.setX(1200);
+        popup.setY(700);
+        popup.show(stage1);
+        stage1.show();
+
+        try {
+            Thread.sleep(1200);
+            stage1.close();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
+
+    }
     //todo call toast on function call: On Hold... added alert notification instead
-    private void showHt(){
+     void showHt(){
         System.out.println("Height is: "+bTree.getHeight());
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "Height is: "+bTree.getHeight(), ButtonType.OK);
         alert.show();
     }
 
-    private void showVertices(){
+     void showVertices(){
         System.out.println("Vertices are: "+verticesCount);
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "Vertices are: "+verticesCount, ButtonType.OK);
         alert.show();
     }
 
-    private void checker() {//todo check index wala this later..check when is previous and next button visible
+     void checker() {//todo check index wala this later..check when is previous and next button visible
         if (index > 0 && index < bTreeLinkedList.size() - 1) {//show antecedent and precedent buttons when,
             antecedent.setVisible(true);
             subsequent.setVisible(true);
@@ -143,7 +184,7 @@ public class Main extends Application {
         }
     }
 
-    private void insertValue() {
+     void insertValue() {
         try {
             key = Integer.parseInt(keyText.getText());//getting the key from text field
             keyText.setText("");//removing the number from text field after adding it
@@ -152,7 +193,7 @@ public class Main extends Application {
 
             bTree.insert(key);//inserting to tree
             addedAudio();//audio:  audible
-
+            showNotification("Inserted: "+key);
             verticesCount++;
             index = 0;
             bTreeLinkedList = bTree.getStTrees();
@@ -165,7 +206,7 @@ public class Main extends Application {
         }
     }
 
-    private void deleteValue() {
+     void deleteValue() {
         try {
             key = Integer.parseInt(keyText.getText());//getting the key from text field
             keyText.setText("");//removing the number from text field after adding it
@@ -177,6 +218,7 @@ public class Main extends Application {
 
             bTree.delete(key);//removing from the tree
             deletedAudio();//playing audio
+            showNotification("Removed: "+key);
 
             verticesCount--;
 
@@ -195,13 +237,15 @@ public class Main extends Application {
         }
     }
 
-    private void findValue() {
+     void findValue() {
         try {
             key = Integer.parseInt(keyText.getText());//getting the key from text field
             keyText.setText("");//removing the number from text field after adding it
 
             btPane.FindNode(bTree, key);//checking the node in the tree
             foundAudio();//playing audio
+            showNotification("Found: "+key);
+
 
         } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Illegal input!", ButtonType.OK);
@@ -214,7 +258,7 @@ public class Main extends Application {
         }
     }
 
-    private void antecedent() {
+     void antecedent() {
         if (index > 0) {
             index--;
             btPane.paneUpdater(bTreeLinkedList.get(index));//getting to past screen/ reprinting the old tree again
@@ -222,7 +266,7 @@ public class Main extends Application {
         }
     }
 
-    private void subsequent() {
+     void subsequent() {
         if (index < bTreeLinkedList.size() - 1) {//incrementing index till it is equal to max number of keys that a node can hold
             index++;
             btPane.paneUpdater(bTreeLinkedList.get(index));//getting to next screen/ printing the new tree
@@ -230,7 +274,7 @@ public class Main extends Application {
         }
     }
 
-    private void reset() {
+     void reset() {
         keyText.setText("");//emptying the text field
 
         bTree.setRoot(null);//setting root to null
