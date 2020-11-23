@@ -20,6 +20,7 @@ class BTNode<E extends Comparable<E>> implements Serializable {
         fNumber = order - 1;
     }
 
+    //todo imp last internal node
     public boolean trueIfLastInternalNode() {//VERY  IMPORTANT CODE:Checks if the node is last internal node
         if (keys.size() == 0)//return false if it is a root node
             return false;
@@ -172,6 +173,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
         }
     }
 
+    //todo imp get ht
     public int getHeight(BTNode<K> node) {
         int height = 0;
         BTNode<K> currentNode = node;
@@ -183,6 +185,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
     }
 
 
+    //todo imp get node
     public BTNode<K> getNode(K key) {
         if (isEmpty()) {
             return nullBTNode;

@@ -20,7 +20,7 @@ public class BTPane extends Pane {
         this.bTree = bTree;
     }
 
-    public void MakeNode(String s, double x, double y) {
+    public void MakeNode(String s, double x, double y) {//just creates a basic rectangular box and puts key in it
         Text nn = new Text(x + 18 - s.length(), y + 30, s); // Text of key value in the node
         nn.setFill(Color. rgb(20, 1, 0)  );
         nn.setFont(Font.font("Times New Roman", FontWeight.EXTRA_BOLD, 14));
@@ -33,31 +33,30 @@ public class BTPane extends Pane {
         this.getChildren().addAll(nodeBox, nn);
     }
 
-    public void paneUpdater(BTree<Integer> bTree) {
+    public void paneUpdater(BTree<Integer> bTree) {//just to reprint a new tree with updated values
         this.getChildren().clear(); // Clear screen & reprint
         this.bTree = bTree;
         makeBTree(bTree.getRoot(), X, Y); // Call to makeBTree function
     }
 
-
     public void FindNode(BTree<Integer> bTree, int key) throws Exception {
         paneUpdater(bTree);
-        if (!bTree.isEmpty()) { //Check for empty tree
-            BTree_JavaFX.BTNode<Integer> current = bTree.getRoot();
-            double x = X, y = Y;
-            double pause = 0;
-            while (!current.equals(bTree.nullBTNode)) {
+        if (!bTree.isEmpty()) { //Check for empty tree..exit if empty
+            BTree_JavaFX.BTNode<Integer> current = bTree.getRoot();//set current to point to root node at first
+            double x = X, y = Y;//setting the coordinates
+            double pause = 0;//adding a pause variable to pause the code for a while to make transition of finding the node more alluring
+            while (!current.equals(bTree.nullBTNode)) {//iterate all the nodes
                 int i = 0;
-                while (i < current.getSize()) {
-                    colorFoundNode(current.getKey(i).toString(), x, y, pause);
-                    pause+= 0.5;
-                    if (current.getKey(i).equals(key)) { // Compare the key
+                while (i < current.getSize()) {//iterate over the keys of current node
+                    colorFoundNode(current.getKey(i).toString(), x, y, pause);//call the colorFoundNOde for each key
+                    pause+= 0.5;//set the duration of pause between each time as 0.5 seconds
+                    if (current.getKey(i).equals(key)) { // Compare the key to be found wih current key
                         return;
-                    } else if (current.getKey(i).compareTo(key) > 0) { // key < searched value
+                    } else if (current.getKey(i).compareTo(key) > 0) { // key < searched value then go down the tree
                         y += 60; //Coming Down
-                        if ((double) i < ((double) current.getSize()) / 2) {
+                        if ((double) i < ((double) current.getSize()) / 2) {//if the index i is less than half of the keys size of node, then set x as below
                             x = x - (bTree.getOrder() - 1) * (bTree.getHeight(current.getTheChildAtIndex(i))-1) * 50.0 / 2 - ((double) current.getTheChildAtIndex(i).getSize()) * 50; //coordinate updated
-                        } else {
+                        } else {//if the index i is more than half of the keys size of node, then update x as
                             x = x - ((double) current.getTheChildAtIndex(i).getSize()) / 2 * 50;
                         }
                         if (i == 0) {
@@ -66,7 +65,7 @@ public class BTPane extends Pane {
 
                         current = current.getTheChildAtIndex(i);
                         i = 0;
-                    } else {
+                    } else {//if key > searched value then go to next key in the node
                         i++;  //next child
                         x += 50;
                     }
@@ -84,7 +83,7 @@ public class BTPane extends Pane {
     }
 
     private void colorFoundNode(String s, double x, double y, double delay) {
-
+//making a basic rectangular box and adding the key value to it
         Text nn = new Text(x + 18 - s.length(), y + 30, s);
         nn.setFill(Color.WHITE);
         nn.setFont(Font.font("Verdana", FontWeight.EXTRA_BOLD, 14));
@@ -94,28 +93,43 @@ public class BTPane extends Pane {
         rect.setStroke(Color.rgb( 245, 245, 245));
         rect.setArcHeight(15); rect.setArcWidth(20);
 
+        //adding the created box to tree's node
         this.getChildren().addAll(rect, nn);
 
         // make fill transition ...this makes node change its colors when it is traversed on
         FillTransition fill = new FillTransition();
 
-        fill.setAutoReverse(false);
+        //todo understand fill
+        //Setting auto reverse value to false  //The transition will set to be auto reserved by setting this to true
+        //Simply it is done so that colour does not turn back to blue.
+        //fill.setAutoReverse(true);
+
+        //setting cycle count for the fill transition
+        //making it 1 cause we don't want it ot change again back to blue
         fill.setCycleCount(1);
+        //setting the time to be taken for transition
         fill.setDelay(Duration.seconds(delay));
         fill.setDuration(Duration.seconds(.5));
+
+        //setting the first colour
         fill.setFromValue(Color.rgb(140, 211, 255));
+        //setting the final colour
         fill.setToValue(Color.rgb(255, 206, 10));
+
+        //adding the fill "characteristic" to rectangular box created before
         fill.setShape(rect);
+
+        //starting the transition
         fill.play();
     }
 
     private void makeBTree(BTree_JavaFX.BTNode<Integer> root, double x, double y) {
-        if (root != null) {
-            // Making keys of node
+        if (root != null) {//return if tree is null
+            // Making keys of node...making the boxes
             for (int i = 0; i < root.getSize(); i++) {
                 MakeNode(root.getKey(i).toString(), x + i * 50, y );
             }
-            // Draw line
+            // Draw line...IMP: making the lines that connect the nodes
             double lineY = y + 2 * 14;
             if (!root.trueIfLastInternalNode()) {
                 for (int i = 0; i < root.getChildren().size(); i++) {

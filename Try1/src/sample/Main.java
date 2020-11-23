@@ -277,7 +277,7 @@ public class Main extends Application {
         bTreeLinkedList.clear();//emptying the linked list of trees
         btPane.paneUpdater(bTree);//reprint the tree//here, it will be an empty screen as root node is empty
         checker();
-
+        verticesCount=0;
         restartAudio();//added audio
     }
 }
