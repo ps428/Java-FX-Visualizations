@@ -121,8 +121,8 @@ public class Main extends Application {
 
     void showNotification(String inp){
         Alert notification = new Alert(Alert.AlertType.INFORMATION, inp, ButtonType.CLOSE);
-        notification.setX(1200);
-        notification.setY(700);
+        notification.setX(20);
+        notification.setY(500);
         notification.setHeaderText("Notification: Task Successful");
         notification.show();
 //todo add notifications here...add close automatically part
@@ -158,7 +158,7 @@ public class Main extends Application {
     //todo call toast on function call: On Hold... added alert notification instead
      void showHt(){
         System.out.println("Height is: "+bTree.getHeight());
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Height is: "+bTree.getHeight(), ButtonType.OK);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Height is: "+(bTree.getHeight()-1), ButtonType.OK);
         alert.show();
     }
 
