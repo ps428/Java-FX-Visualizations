@@ -149,14 +149,14 @@ public class Main extends Application {
             key = Integer.parseInt(keyText.getText());//getting the key from text field
             keyText.setText("");//removing the number from text field after adding it
 
-            bTree.setStepTrees(new LinkedList<BTree<Integer>>());
+            bTree.setStTrees(new LinkedList<BTree<Integer>>());
 
             bTree.insert(key);//inserting to tree
             addedAudio();//audio:  audible
 
             verticesCount++;
             index = 0;
-            bTreeLinkedList = bTree.getStepTrees();
+            bTreeLinkedList = bTree.getStTrees();
             btPane.paneUpdater(bTreeLinkedList.get(0));//re printing the tree
             checker();
         } catch (NumberFormatException e) {
@@ -174,7 +174,7 @@ public class Main extends Application {
             if (bTree.getNode(key) == bTree.nullBTNode) {//throw error if the node is not present in the tree
                 throw new Exception("Node is not present in the tree!");
             }
-            bTree.setStepTrees(new LinkedList<BTree<Integer>>());
+            bTree.setStTrees(new LinkedList<BTree<Integer>>());
 
             bTree.delete(key);//removing from the tree
             deletedAudio();//playing audio
@@ -182,7 +182,7 @@ public class Main extends Application {
             verticesCount--;
 
             index = 0;
-            bTreeLinkedList = bTree.getStepTrees();
+            bTreeLinkedList = bTree.getStTrees();
             btPane.paneUpdater(bTreeLinkedList.get(0));//reprinting the tree
             checker();
         } catch (NumberFormatException e) {

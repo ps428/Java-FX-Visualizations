@@ -1,11 +1,6 @@
 package Btree_JavaFx;
 
 import javafx.animation.FillTransition;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -14,8 +9,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-
-import java.util.LinkedList;
 
 public class BTPane extends Pane {
     Btree_JavaFx.BTree<Integer> bTree; // object of class Btree
@@ -66,15 +59,15 @@ public class BTPane extends Pane {
                     } else if (current.getKey(i).compareTo(key) > 0) { // key < searched value
                         y += 60; //Coming Down
                         if ((double) i < ((double) current.getSize()) / 2) {
-                            x = x - (bTree.getOrder() - 1) * (bTree.getHeight(current.getChild(i))-1) * 50.0 / 2 - ((double) current.getChild(i).getSize()) * 50; //coordinate updated
+                            x = x - (bTree.getOrder() - 1) * (bTree.getHeight(current.getTheChildAtIndex(i))-1) * 50.0 / 2 - ((double) current.getTheChildAtIndex(i).getSize()) * 50; //coordinate updated
                         } else {
-                            x = x - ((double) current.getChild(i).getSize()) / 2 * 50;
+                            x = x - ((double) current.getTheChildAtIndex(i).getSize()) / 2 * 50;
                         }
                         if (i == 0) {
                             x -= 50 * 2;
                         }
 
-                        current = current.getChild(i);
+                        current = current.getTheChildAtIndex(i);
                         i = 0;
                     } else {
                         i++;  //next child
@@ -84,9 +77,9 @@ public class BTPane extends Pane {
 
                 if (!current.isNull()) {
                     y += 60;
-                    x = x + (bTree.getOrder() - 1) * (bTree.getHeight(current.getChild(i))-1) * 50.0 / 2 + 50 * 2; // coordinate updated
+                    x = x + (bTree.getOrder() - 1) * (bTree.getHeight(current.getTheChildAtIndex(i))-1) * 50.0 / 2 + 50 * 2; // coordinate updated
 
-                    current = current.getChild(current.getSize());
+                    current = current.getTheChildAtIndex(current.getSize());
                 }
             }
         }
@@ -127,7 +120,7 @@ public class BTPane extends Pane {
             }
             // Draw line
             double lineY = y + 2 * 14;
-            if (!root.isLastInternalNode()) {
+            if (!root.trueIfLastInternalNode()) {
                 for (int i = 0; i < root.getChildren().size(); i++) {
                     double eol = x + i * 50; //end of Line
                     double soc = 0, eox = 0;   // start of child nodes
@@ -135,14 +128,14 @@ public class BTPane extends Pane {
                     if ((double) i > ((double) root.getSize()) / 2) {
                         // TODO: fix
                         soc = eol
-                                + (bTree.getOrder() - 1) * (bTree.getHeight(root.getChild(i))-1) * 50.0 / 2;
-                        eox = soc + ((double) root.getChild(i).getSize()) / 2 * 50;
+                                + (bTree.getOrder() - 1) * (bTree.getHeight(root.getTheChildAtIndex(i))-1) * 50.0 / 2;
+                        eox = soc + ((double) root.getTheChildAtIndex(i).getSize()) / 2 * 50;
                     } else if ((double) i < ((double) root.getSize()) / 2) {
-                        eox = eol - (bTree.getOrder() - 1) * (bTree.getHeight(root.getChild(i))-1) * 50.0 / 2
-                                - ((double) root.getChild(i).getSize()) / 2 * 50;
-                        soc = eox - ((double) root.getChild(i).getSize()) / 2 * 50;
+                        eox = eol - (bTree.getOrder() - 1) * (bTree.getHeight(root.getTheChildAtIndex(i))-1) * 50.0 / 2
+                                - ((double) root.getTheChildAtIndex(i).getSize()) / 2 * 50;
+                        soc = eox - ((double) root.getTheChildAtIndex(i).getSize()) / 2 * 50;
                     } else {
-                        soc = eol - ((double) root.getChild(i).getSize()) / 2 * 50;
+                        soc = eol - ((double) root.getTheChildAtIndex(i).getSize()) / 2 * 50;
                         eox = eol;
                     }
 
@@ -155,190 +148,19 @@ public class BTPane extends Pane {
                     }
 
 
-                    if (!root.getChild(i).isNull()) {
+                    if (!root.getTheChildAtIndex(i).isNull()) {
                         Line line = new Line(eol, lineY, eox, y + 60);
                         line.setStroke(Color.rgb(240, 216, 122) );
                         line.setStrokeWidth(1.5);
                         this.getChildren().add(line);
                     }
-                    makeBTree(root.getChild(i), soc, y + 60);   // Draw child nodes
+                    makeBTree(root.getTheChildAtIndex(i), soc, y + 60);   // Draw child nodes
                 }
             }
         }
     }
 
 
-
-}
-
-
-class BTWin extends BorderPane {
-    int windowHeight;
-    int windowWidth;
-
-    public BTWin(int windowWidth, int windowHeight) {
-        super();
-        this.windowHeight = windowHeight;
-        this.windowWidth = windowWidth;
-    }
-
-    int key;
-    BTPane btPane;
-    TextField inputTxt = new TextField();
-     Button antecedent = new Button("Antecedent");
-     Button subsequent = new Button("subsequent");
-
-
-     int index = 0;
-     LinkedList<BTree<Integer>> bTreeLinkedList = new LinkedList<Btree_JavaFx.BTree<Integer>>();
-     Btree_JavaFx.BTree<Integer> bTree = new Btree_JavaFx.BTree<Integer>(3);
-
-
-
-    public void runner() {
-
-        HBox horizontalBox = new HBox(15);
-        this.setTop(horizontalBox);
-        BorderPane.setMargin(horizontalBox, new Insets(10, 10, 10, 10));
-
-        // Buttons
-        Button insertButton = new Button("Insert");
-        Button deleteButton = new Button("Delete");
-        Button searchButton = new Button("Search");
-        Button resetButton = new Button("Reset");
-        resetButton.setId("reset");
-        resetButton.setStyle("-fx-base: red;");
-        Label nullLabel = new Label();
-        nullLabel.setPrefWidth(30);
-
-        inputTxt.setPrefWidth(60);
-        inputTxt.setAlignment(Pos.BASELINE_RIGHT); //Todo Update run func
-
-        horizontalBox.getChildren().addAll(new Label("Enter a number: "), inputTxt, insertButton, deleteButton, searchButton,
-                resetButton, nullLabel, antecedent, subsequent);
-        horizontalBox.setAlignment(Pos.CENTER);
-        checkVisible();
-
-
-        btPane = new BTPane(windowWidth / 2.0, 50, bTree);
-        btPane.setPrefSize(1000, 1000);
-        this.setCenter(btPane);
-
-        insertButton.setOnMouseClicked(e -> insertion());  // Mouse click events
-        deleteButton.setOnMouseClicked(e -> deleteValue());
-        searchButton.setOnMouseClicked(e -> findValue());
-        resetButton.setOnMouseClicked(e -> reset());
-        antecedent.setOnMouseClicked(e -> antecedent());
-        subsequent.setOnMouseClicked(e -> subsequent());
-    }
-
-
-
-    void insertion() {
-        try {
-            key = Integer.parseInt(inputTxt.getText());
-            inputTxt.setText("");
-            bTree.setStepTrees(new LinkedList<Btree_JavaFx.BTree<Integer>>());
-
-            bTree.insert(key);
-
-            index = 0;
-            bTreeLinkedList = bTree.getStepTrees();
-            btPane.paneUpdater(bTreeLinkedList.get(0));
-            checkVisible();
-        } catch (NumberFormatException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Illegal input !", ButtonType.OK);
-            alert.show();
-        }
-    }
-
-    private void checkVisible() {
-        if (index > 0 && index < bTreeLinkedList.size() - 1) {
-            antecedent.setVisible(true);
-            subsequent.setVisible(true);
-        } else if (index > 0 && index == bTreeLinkedList.size() - 1) {
-            antecedent.setVisible(true);
-            subsequent.setVisible(false);
-        } else if (index == 0 && index < bTreeLinkedList.size() - 1) {
-            antecedent.setVisible(false);
-            subsequent.setVisible(true);
-        } else {
-            antecedent.setVisible(false);
-            subsequent.setVisible(false);
-        }
-    }
-
-    private void findValue() {
-        try {
-            key = Integer.parseInt(inputTxt.getText());
-            inputTxt.setText("");
-
-            btPane.FindNode(bTree, key);
-
-        } catch (NumberFormatException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Illegal input!", ButtonType.OK);
-            alert.show();
-        } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, e.getMessage(), ButtonType.OK);
-            alert.show();
-        }
-    }
-
-
-    private void deleteValue() {
-        try {
-            key = Integer.parseInt(inputTxt.getText());
-            inputTxt.setText("");
-            if (bTree.getNode(key) == bTree.nullBTNode) {
-                throw new Exception("Not in the tree!");
-            }
-            bTree.setStepTrees(new LinkedList<Btree_JavaFx.BTree<Integer>>());
-
-            bTree.delete(key);
-
-            index = 0;
-            bTreeLinkedList = bTree.getStepTrees();
-            btPane.paneUpdater(bTreeLinkedList.get(0));
-            checkVisible();
-        } catch (NumberFormatException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Illegal input data!", ButtonType.OK);
-            alert.show();
-        } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, e.getMessage(), ButtonType.OK);
-            alert.show();
-        }
-    }
-
-
-
-    private void antecedent() {
-        if (index > 0) {
-            index--;
-            btPane.paneUpdater(bTreeLinkedList.get(index));
-
-            checkVisible();
-        }
-    }
-
-    private void subsequent() {
-        if (index < bTreeLinkedList.size() - 1) {
-            index++;
-            System.out.println("index: " + index + " - size: " + bTreeLinkedList.size());
-            btPane.paneUpdater(bTreeLinkedList.get(index));
-
-            checkVisible();
-        }
-    }
-
-    private void reset() {
-        inputTxt.setText("");
-
-        bTree.setRoot(null);
-        index = 0;
-        bTreeLinkedList.clear();
-        btPane.paneUpdater(bTree);
-        checkVisible();
-    }
 
 }
 
