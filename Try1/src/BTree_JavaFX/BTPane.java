@@ -1,4 +1,4 @@
-package Btree_JavaFx;
+package BTree_JavaFX;
 
 import javafx.animation.FillTransition;
 import javafx.scene.layout.Pane;
@@ -11,7 +11,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 public class BTPane extends Pane {
-    Btree_JavaFx.BTree<Integer> bTree; // object of class Btree
+    BTree_JavaFX.BTree<Integer> bTree; // object of class Btree
     double X, Y;   // coordinates
 
     public BTPane(double x, double y, BTree<Integer> bTree) {
@@ -19,9 +19,6 @@ public class BTPane extends Pane {
         this.Y = y+200;
         this.bTree = bTree;
     }
-
-
-
 
     public void MakeNode(String s, double x, double y) {
         Text nn = new Text(x + 18 - s.length(), y + 30, s); // Text of key value in the node
@@ -46,7 +43,7 @@ public class BTPane extends Pane {
     public void FindNode(BTree<Integer> bTree, int key) throws Exception {
         paneUpdater(bTree);
         if (!bTree.isEmpty()) { //Check for empty tree
-            Btree_JavaFx.BTNode<Integer> current = bTree.getRoot();
+            BTree_JavaFX.BTNode<Integer> current = bTree.getRoot();
             double x = X, y = Y;
             double pause = 0;
             while (!current.equals(bTree.nullBTNode)) {
@@ -112,7 +109,7 @@ public class BTPane extends Pane {
         fill.play();
     }
 
-    private void makeBTree(Btree_JavaFx.BTNode<Integer> root, double x, double y) { //Todo check
+    private void makeBTree(BTree_JavaFX.BTNode<Integer> root, double x, double y) {
         if (root != null) {
             // Making keys of node
             for (int i = 0; i < root.getSize(); i++) {
@@ -146,7 +143,6 @@ public class BTPane extends Pane {
                         eox += 50 * 2;
                     }
 
-
                     if (!root.getTheChildAtIndex(i).isNull()) {
                         Line line = new Line(eol, lineY, eox, y + 60);
                         line.setStroke(Color.rgb(240, 216, 122) );
@@ -158,8 +154,5 @@ public class BTPane extends Pane {
             }
         }
     }
-
-
-
 }
 

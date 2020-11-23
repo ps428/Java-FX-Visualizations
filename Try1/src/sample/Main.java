@@ -2,15 +2,11 @@ package sample;
 //remove/ add audio in these lines
 //155 164 180 190 194 205 209 213 243
 import java.util.LinkedList;
-import java.util.concurrent.TimeUnit;
 
-import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -18,14 +14,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.*;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
-import Btree_JavaFx.BTree;
-import Btree_JavaFx.BTPane;
-import javafx.util.Duration;
+import BTree_JavaFX.BTree;
+import BTree_JavaFX.BTPane;
 
 import static Media.audioTest.*;
 import static javafx.scene.paint.Color.*;
@@ -40,35 +33,35 @@ public class Main extends Application {
 
     Button antecedent = new Button("Revert");
     Button subsequent = new Button("Transform");
- //Hello
+
      int index = 0;
      LinkedList<BTree<Integer>> bTreeLinkedList = new LinkedList<BTree<Integer>>();
      BTree<Integer> bTree = new BTree<Integer>(3);
 
     @Override
     public void start(Stage primaryStage) {
-        final int windowWidth = 720;
+        int windowWidth = 720;
 
-        BorderPane root = new BorderPane();
+        BorderPane rootPane = new BorderPane();
 
         // Create button HBox on top
-        HBox hBox = new HBox(15);
-        root.setBottom(hBox);
-        BorderPane.setMargin(hBox, new Insets(10, 10, 10, 10));
+        HBox horizontalBox = new HBox(15);
+        rootPane.setBottom(horizontalBox);
+        BorderPane.setMargin(horizontalBox, new Insets(10, 10, 10, 10));
         // TextField
         keyText.setPrefWidth(60);
         keyText.setAlignment(Pos.BASELINE_RIGHT);
         // Buttons
         Button insertButton = new Button("Insert");
         Button deleteButton = new Button("Delete");
-        Button searchButton = new Button("Find");
+        Button findButton = new Button("Find");
         Button resetButton = new Button("Reset");
         Button getHT = new Button(("Show Height"));
         Button getVertices = new Button(("Show Vertices"));
 
         insertButton.setStyle( "-fx-background-color:  #7289da ; -fx-text-fill:  	#ffffff ; ");
         deleteButton.setStyle( "-fx-background-color:  #7289da ; -fx-text-fill:  	#ffffff ; ");
-        searchButton.setStyle( "-fx-background-color:  #7289da ; -fx-text-fill:  	#ffffff ; ");
+        findButton.setStyle( "-fx-background-color:  #7289da ; -fx-text-fill:  	#ffffff ; ");
         subsequent.setStyle( "-fx-background-color:  #7289da ; -fx-text-fill:  	#ffffff ; ");
         antecedent.setStyle( "-fx-background-color:  #7289da ; -fx-text-fill:  	#ffffff ; ");
         getHT.setStyle( "-fx-background-color:  #7289da ; -fx-text-fill:  	#ffffff ; ");
@@ -80,7 +73,7 @@ public class Main extends Application {
         nullLabel.setPrefWidth(30);
 
 
-        //todo adjust toast
+        //todo adjust toast Status: On Hold...added notification instead
         String toastMsg = "some text...";
         int toastMsgTime = 1500; //1.5 seconds
         int fadeInTime = 500; //0.5 seconds
@@ -90,24 +83,23 @@ public class Main extends Application {
         //System.out.println(Font.getFontNames());
         Text basic = new Text("Enter a number: ");
 
-
         Font f1 = Font.font("Verdana", FontWeight.BOLD, FontPosture.ITALIC, 18);
         basic.setFill(DARKORCHID);
         basic.setFont(f1);
 
-        hBox.getChildren().addAll(basic, keyText, insertButton, deleteButton, searchButton,
+        horizontalBox.getChildren().addAll(basic, keyText, insertButton, deleteButton, findButton,
                 resetButton, nullLabel, antecedent, subsequent, getHT, getVertices);
-        hBox.setAlignment(Pos.CENTER);
+        horizontalBox.setAlignment(Pos.CENTER);
         checker();
 
         // Create TreePane in center
         btPane = new BTPane(windowWidth / 2, 50, bTree);
         btPane.setPrefSize(800, 800);
-        root.setCenter(btPane);
+        rootPane.setCenter(btPane);
         btPane.setStyle("-fx-background-color:  #2c2f33;");
         insertButton.setOnMouseClicked(e -> insertValue());
         deleteButton.setOnMouseClicked(e -> deleteValue());
-        searchButton.setOnMouseClicked(e -> findValue());
+        findButton.setOnMouseClicked(e -> findValue());
         resetButton.setOnMouseClicked(e -> reset());
         getHT.setOnMouseClicked(e-> showHt());
         getVertices.setOnMouseClicked(e-> showVertices());
@@ -116,7 +108,7 @@ public class Main extends Application {
         subsequent.setOnMouseClicked(e -> subsequent());
 
         // Create a scene
-        Scene scene = new Scene(root,  800,800);
+        Scene scene = new Scene(rootPane,  800,800);
         primaryStage.setTitle("Pranav & Madhav's B-Tree Visualization");
         primaryStage.setScene(scene);
         primaryStage.setFullScreen(true);
@@ -288,6 +280,4 @@ public class Main extends Application {
 
         restartAudio();//added audio
     }
-
-
 }

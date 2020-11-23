@@ -1,11 +1,9 @@
-package Btree_JavaFx;
+package BTree_JavaFX;
 
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.ArrayList;
 import Utility.nodeCopy;
-
-//Todo check serializable interface and cloneUtils
 
 //node class
 class BTNode<E extends Comparable<E>> implements Serializable {
@@ -22,7 +20,6 @@ class BTNode<E extends Comparable<E>> implements Serializable {
         fNumber = order - 1;
     }
 
-
     public boolean trueIfLastInternalNode() {//VERY  IMPORTANT CODE:Checks if the node is last internal node
         if (keys.size() == 0)//return false if it is a root node
             return false;
@@ -32,7 +29,6 @@ class BTNode<E extends Comparable<E>> implements Serializable {
                 return false;
         return true;
     }
-
 
     //basic getters and setters
     //parents
@@ -96,8 +92,10 @@ public class BTree<K extends Comparable<K>> implements Serializable {
 
      int hNumber;
      BTNode<K> root = null;
-     int order, index, treeSize;
-    public final BTNode<K> nullBTNode = new BTNode<K>();
+     int order;
+    int index;
+    int treeSize;
+    public BTNode<K> nullBTNode = new BTNode<K>();
 
      LinkedList<BTree<K>> stTrees = new LinkedList<BTree<K>>();//making a linked list of trees
 
@@ -164,7 +162,6 @@ public class BTree<K extends Comparable<K>> implements Serializable {
             return vertices;
         }
     }
-
 
     //getting the height of tree
     public int getHeight() {
@@ -364,9 +361,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
                 currentNode.removeChild(0);
             }
             newChildNode.addChild(hNumber, nullBTNode);
- // todo ye comment htadein?
-// Lay a half-hybrid, just like that, the current node will be a hybrid of the middle key
-// Move up 1 item (used to be the father)
+
             BTNode<K> originalFatherNode = getRestOfHalfKeys(currentNode);
             currentNode.addChild(0, newChildNode);
             currentNode.addChild(1, originalFatherNode);
@@ -461,7 +456,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
             }
             return node;
         } else {
-            if (flag) {
+            if(flag) {
                 currentNode.addKey(0, fatherNode.getKey(0));
                 fatherNode.removeKey(0);
                 fatherNode.removeChild(0);
@@ -542,7 +537,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
 
 
 
-    /* // todo cases
+    /*
      * Case 1: If k is in the node x which is a leaf and x.size -1 >= halfNumber
      * Case 2: If k is in the node x which is a leaf and x.size -1 < halfNumber Case
      * 3: If k is in the node x and x is an internal node (not a leaf)
@@ -564,7 +559,6 @@ public class BTree<K extends Comparable<K>> implements Serializable {
         } else {
             boolean flag = true;
             boolean isReplaced = false;
-            // TODO: case 3
             if (!node.trueIfLastInternalNode()) {
                 node = replaceNode(node);
                 deleteNode = node;
@@ -572,7 +566,6 @@ public class BTree<K extends Comparable<K>> implements Serializable {
             }
 
             if (node.getSize() - 1 < hNumber) {
-                // TODO: case 2
                 node = balanceDeletedNode(node);
                 if (isReplaced) {
                     for (int i = 0; i <= node.getSize(); i++) {
@@ -585,7 +578,6 @@ public class BTree<K extends Comparable<K>> implements Serializable {
                     }
                 }
             } else if (node.trueIfLastInternalNode()) {
-                // TODO: Case 1
                 System.out.println("Deleted");
                 node.removeChild(0);
             }
