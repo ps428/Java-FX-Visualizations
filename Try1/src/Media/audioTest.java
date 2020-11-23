@@ -14,10 +14,10 @@ import static javafx.application.Application.launch;
 public class audioTest{
 
     // For Ubuntu": PRANAV
-   // private static String location = "/home/pranav/Desktop/Github/PPL-M2020-Assignment/Try1/src/Media/";//location to Pranav's folder of mp3 files;
+    private static String location = "/home/pranav/Desktop/Github/PPL-M2020-Assignment/Try1/src/Media/";//location to Pranav's folder of mp3 files;
 
     // For Windows: MADDY
-     private static String location = "C:\\Users\\Mahav\\Desktop\\ppl_labs\\New\\PPL-M2020-Assignment\\Try1\\src\\Media\\";//location to  Madhav's folder of mp3 files;
+     //private static String location = "C:\\Users\\Mahav\\Desktop\\ppl_labs\\New\\PPL-M2020-Assignment\\Try1\\src\\Media\\";//location to  Madhav's folder of mp3 files;
 
     public static void deletedAudio(){
         String deletedAudioPath = location+"deleted.mp3";

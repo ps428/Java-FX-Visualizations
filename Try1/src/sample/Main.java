@@ -9,6 +9,8 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -16,6 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
@@ -84,9 +87,10 @@ public class Main extends Application {
         int fadeOutTime= 500; //0.5 seconds
         Toast.makeText(null, toastMsg, toastMsgTime, fadeInTime, fadeOutTime);
 
-
         //System.out.println(Font.getFontNames());
         Text basic = new Text("Enter a number: ");
+
+
         Font f1 = Font.font("Verdana", FontWeight.BOLD, FontPosture.ITALIC, 18);
         basic.setFill(DARKORCHID);
         basic.setFont(f1);
@@ -124,9 +128,9 @@ public class Main extends Application {
         notification.setX(20);
         notification.setY(500);
         notification.setHeaderText("Notification: Task Successful");
-        notification.show();
-//todo add notifications here...add close automatically part
-       /* try {
+       // notification.show();
+//todo notification can be show from here
+        /*try {
             TimeUnit.SECONDS.sleep(1);
         }
         catch (InterruptedException e) {
@@ -155,7 +159,6 @@ public class Main extends Application {
         }*/
 
     }
-    //todo call toast on function call: On Hold... added alert notification instead
      void showHt(){
         System.out.println("Height is: "+bTree.getHeight());
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "Height is: "+(bTree.getHeight()-1), ButtonType.OK);
@@ -168,7 +171,7 @@ public class Main extends Application {
         alert.show();
     }
 
-     void checker() {//todo check index wala this later..check when is previous and next button visible
+     void checker() {
         if (index > 0 && index < bTreeLinkedList.size() - 1) {//show antecedent and precedent buttons when,
             antecedent.setVisible(true);
             subsequent.setVisible(true);

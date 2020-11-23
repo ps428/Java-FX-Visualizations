@@ -126,7 +126,6 @@ public class BTPane extends Pane {
                     double soc = 0, eox = 0;   // start of child nodes
 
                     if ((double) i > ((double) root.getSize()) / 2) {
-                        // TODO: fix
                         soc = eol
                                 + (bTree.getOrder() - 1) * (bTree.getHeight(root.getTheChildAtIndex(i))-1) * 50.0 / 2;
                         eox = soc + ((double) root.getTheChildAtIndex(i).getSize()) / 2 * 50;
