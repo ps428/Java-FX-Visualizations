@@ -1,6 +1,6 @@
 package sample;
 //remove/ add audio in these lines
-//167 171, 226,231 201,205  263
+//155 164 180 190 194 205 209 213 243
 import java.util.LinkedList;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -72,7 +72,6 @@ public class Main extends Application {
         nullLabel.setPrefWidth(30);
 
 
-
         //todo adjust toast
         String toastMsg = "some text...";
         int toastMsgTime = 1500; //1.5 seconds
@@ -128,7 +127,7 @@ public class Main extends Application {
         alert.show();
     }
 
-    private void checker() {//todo check index wala this later
+    private void checker() {//todo check index wala this later..check when is previous and next button visible
         if (index > 0 && index < bTreeLinkedList.size() - 1) {//show antecedent and precedent buttons when,
             antecedent.setVisible(true);
             subsequent.setVisible(true);
@@ -224,7 +223,7 @@ public class Main extends Application {
     }
 
     private void subsequent() {
-        if (index < bTreeLinkedList.size() - 1) {
+        if (index < bTreeLinkedList.size() - 1) {//incrementing index till it is equal to max number of keys that a node can hold
             index++;
             btPane.paneUpdater(bTreeLinkedList.get(index));//getting to next screen/ printing the new tree
             checker();

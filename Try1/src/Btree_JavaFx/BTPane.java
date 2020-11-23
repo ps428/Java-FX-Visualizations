@@ -23,13 +23,13 @@ public class BTPane extends Pane {
 
 
 
-    public void MakeNode(String s, double x, double y, Color color) {
+    public void MakeNode(String s, double x, double y) {
         Text nn = new Text(x + 18 - s.length(), y + 30, s); // Text of key value in the node
-        nn.setFill(Color. 	rgb(20, 1, 0)  );
+        nn.setFill(Color. rgb(20, 1, 0)  );
         nn.setFont(Font.font("Times New Roman", FontWeight.EXTRA_BOLD, 14));
 
         Rectangle nodeBox = new Rectangle(x, y, 50, 50); // node box configuration
-        nodeBox.setFill(color);
+        nodeBox.setFill(Color.rgb(140, 211, 255));
         nodeBox.setStroke(Color.rgb(35, 39, 42)  );
         nodeBox.setArcHeight(15); nodeBox.setArcWidth(20);
 
@@ -93,21 +93,21 @@ public class BTPane extends Pane {
         nn.setFont(Font.font("Verdana", FontWeight.EXTRA_BOLD, 14));
 
         Rectangle rect = new Rectangle(x, y, 50, 50);  // Draw a node
-        rect.setFill(Color.web("#6ab5ff"));
-        rect.setStroke(Color.WHITESMOKE);
+        rect.setFill(Color.rgb(140, 211, 255));
+        rect.setStroke(Color.rgb( 245, 245, 245));
         rect.setArcHeight(15); rect.setArcWidth(20);
 
         this.getChildren().addAll(rect, nn);
 
-        // make fill transition
+        // make fill transition ...this makes node change its colors when it is traversed on
         FillTransition fill = new FillTransition();
 
         fill.setAutoReverse(false);
         fill.setCycleCount(1);
         fill.setDelay(Duration.seconds(delay));
-        fill.setDuration(Duration.seconds(1));
-        fill.setFromValue(Color.web("#6ab5ff")); //Todo color search node
-        fill.setToValue(Color.web("#f57f7f"));
+        fill.setDuration(Duration.seconds(.5));
+        fill.setFromValue(Color.rgb(140, 211, 255));
+        fill.setToValue(Color.rgb(255, 206, 10));
         fill.setShape(rect);
         fill.play();
     }
@@ -116,7 +116,7 @@ public class BTPane extends Pane {
         if (root != null) {
             // Making keys of node
             for (int i = 0; i < root.getSize(); i++) {
-                MakeNode(root.getKey(i).toString(), x + i * 50, y, Color.rgb(140, 211, 255) );
+                MakeNode(root.getKey(i).toString(), x + i * 50, y );
             }
             // Draw line
             double lineY = y + 2 * 14;

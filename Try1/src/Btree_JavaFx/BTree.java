@@ -211,7 +211,6 @@ public class BTree<K extends Comparable<K>> implements Serializable {
         return nullBTNode;
     }
 
-
     private BTNode<K> getHalfKeys(K key, BTNode<K> fullNode) {
         int fullNodeSize = fullNode.getSize();
 
@@ -230,7 +229,6 @@ public class BTree<K extends Comparable<K>> implements Serializable {
         return getHalfKeys(fullNode);
     }
 
-
     private BTNode<K> getHalfKeys(BTNode<K> fullNode) {
         BTNode<K> newNode = new BTNode<K>(order);
         for (int i = 0; i < hNumber; i++) {
@@ -239,7 +237,6 @@ public class BTree<K extends Comparable<K>> implements Serializable {
         }
         return newNode;
     }
-
 
     private BTNode<K> getRestOfHalfKeys(BTNode<K> halfNode) {
         BTNode<K> newNode = new BTNode<K>(order);
@@ -255,14 +252,12 @@ public class BTree<K extends Comparable<K>> implements Serializable {
         return newNode;
     }
 
-
     private void mergeWithFatherNode(BTNode<K> childNode, int index) {
         childNode.getParent().addKey(index, childNode.getKey(0));
         childNode.getParent().removeChild(index);
         childNode.getParent().addChild(index, childNode.getTheChildAtIndex(0));
         childNode.getParent().addChild(index + 1, childNode.getTheChildAtIndex(1));
     }
-
 
     private void mergeWithFatherNode(BTNode<K> childNode) {
         int fatherNodeSize = childNode.getParent().getSize();
@@ -279,12 +274,10 @@ public class BTree<K extends Comparable<K>> implements Serializable {
             childNode.getParent().getTheChildAtIndex(i).setParent(childNode.getParent());
     }
 
-
     private void setSplitFatherNode(BTNode<K> node) {
         for (int i = 0; i <= node.getSize(); i++)
             node.getTheChildAtIndex(i).setParent(node);
     }
-
 
     private void processOverflow(BTNode<K> currentNode) {
         BTNode<K> newNode = getHalfKeys(currentNode);
@@ -300,7 +293,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
         setSplitFatherNode(originalNode);
         setSplitFatherNode(newNode);
 
-        System.out.println("Enter the key in the middle of the meeting");
+        System.out.println("Enter the key in the middle. This is caused due to overflow");
 
         stTrees.add(nodeCopy.clone(this));
     }
@@ -316,7 +309,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
             root.addChild(0, nullBTNode);
             root.addChild(1, nullBTNode);
 
-            System.out.println("root inserted");
+            System.out.println("Root inserted");
             stTrees.add(nodeCopy.clone(this));
             return;
         }
@@ -350,7 +343,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
                     currentNode.addChild(currentNode.getSize(), nullBTNode);
                     treeSize++;
 
-                    System.out.println("Inserted in the node");
+                    System.out.println("Inserted inside the node");
                     stTrees.add(nodeCopy.clone(this));
                     return;
                 } else {
@@ -380,8 +373,6 @@ public class BTree<K extends Comparable<K>> implements Serializable {
             originalFatherNode.setParent(currentNode);
             newChildNode.setParent(currentNode);
             treeSize++;
-
-            System.out.println("Move the key in the middle of nowhere");
 
             stTrees.add(nodeCopy.clone(this));
 
