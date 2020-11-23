@@ -228,8 +228,8 @@ class BTWin extends BorderPane {
         deleteButton.setOnMouseClicked(e -> deleteValue());
         searchButton.setOnMouseClicked(e -> findValue());
         resetButton.setOnMouseClicked(e -> reset());
-        antecedent.setOnMouseClicked(e -> goPrevious());
-        subsequent.setOnMouseClicked(e -> goNext());
+        antecedent.setOnMouseClicked(e -> antecedent());
+        subsequent.setOnMouseClicked(e -> subsequent());
     }
 
 
@@ -311,7 +311,7 @@ class BTWin extends BorderPane {
 
 
 
-    private void goPrevious() {
+    private void antecedent() {
         if (index > 0) {
             index--;
             btPane.paneUpdater(bTreeLinkedList.get(index));
@@ -320,7 +320,7 @@ class BTWin extends BorderPane {
         }
     }
 
-    private void goNext() {
+    private void subsequent() {
         if (index < bTreeLinkedList.size() - 1) {
             index++;
             System.out.println("index: " + index + " - size: " + bTreeLinkedList.size());

@@ -39,8 +39,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        // TODO Auto-generated method stub
-        final int windowHeight = 480;
         final int windowWidth = 720;
 
         BorderPane root = new BorderPane();
@@ -52,13 +50,14 @@ public class Main extends Application {
         // TextField
         keyText.setPrefWidth(60);
         keyText.setAlignment(Pos.BASELINE_RIGHT);
-        // Button
+        // Buttons
         Button insertButton = new Button("Insert");
         Button deleteButton = new Button("Delete");
         Button searchButton = new Button("Find");
         Button resetButton = new Button("Reset");
         Button getHT = new Button(("Show Height"));
         Button getVertices = new Button(("Show Vertices"));
+
         insertButton.setStyle( "-fx-background-color:  #7289da ; -fx-text-fill:  	#ffffff ; ");
         deleteButton.setStyle( "-fx-background-color:  #7289da ; -fx-text-fill:  	#ffffff ; ");
         searchButton.setStyle( "-fx-background-color:  #7289da ; -fx-text-fill:  	#ffffff ; ");
@@ -82,8 +81,7 @@ public class Main extends Application {
         Toast.makeText(null, toastMsg, toastMsgTime, fadeInTime, fadeOutTime);
 
 
-//todo change font type
-        System.out.println(Font.getFontNames());
+        //System.out.println(Font.getFontNames());
         Text basic = new Text("Enter a number: ");
         Font f1 = Font.font("Verdana", FontWeight.BOLD, FontPosture.ITALIC, 18);
         basic.setFill(DARKORCHID);
@@ -106,19 +104,18 @@ public class Main extends Application {
         getHT.setOnMouseClicked(e-> showHt());
         getVertices.setOnMouseClicked(e-> showVertices());
 
-        antecedent.setOnMouseClicked(e -> goPrevious());
-        subsequent.setOnMouseClicked(e -> goNext());
+        antecedent.setOnMouseClicked(e -> antecedent());
+        subsequent.setOnMouseClicked(e -> subsequent());
 
         // Create a scene
         Scene scene = new Scene(root,  800,800);
-        //todo deleted css file
         primaryStage.setTitle("Pranav & Madhav's B-Tree Visualization");
         primaryStage.setScene(scene);
         primaryStage.setFullScreen(true);
         primaryStage.show();
     }
 
-    //todo call toast on function call
+    //todo call toast on function call: On Hold... added alert notification instead
     private void showHt(){
         System.out.println("Height is: "+bTree.getHeight());
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "Height is: "+bTree.getHeight(), ButtonType.OK);
@@ -131,8 +128,8 @@ public class Main extends Application {
         alert.show();
     }
 
-    private void checker() {
-        if (index > 0 && index < bTreeLinkedList.size() - 1) {
+    private void checker() {//todo check index wala this later
+        if (index > 0 && index < bTreeLinkedList.size() - 1) {//show antecedent and precedent buttons when,
             antecedent.setVisible(true);
             subsequent.setVisible(true);
         } else if (index > 0 && index == bTreeLinkedList.size() - 1) {
@@ -149,117 +146,98 @@ public class Main extends Application {
 
     private void insertValue() {
         try {
-            key = Integer.parseInt(keyText.getText());
-            keyText.setText("");
+            key = Integer.parseInt(keyText.getText());//getting the key from text field
+            keyText.setText("");//removing the number from text field after adding it
+
             bTree.setStepTrees(new LinkedList<BTree<Integer>>());
 
-            bTree.insert(key);
+            bTree.insert(key);//inserting to tree
+            addedAudio();//audio:  audible
+
             verticesCount++;
             index = 0;
             bTreeLinkedList = bTree.getStepTrees();
-            btPane.paneUpdater(bTreeLinkedList.get(0));
+            btPane.paneUpdater(bTreeLinkedList.get(0));//re printing the tree
             checker();
         } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Illegal input!", ButtonType.OK);
+            errorAudio();
             alert.show();
         }
-
-        try {
-            addedAudio();//TODO audio not audible
-
-        } catch (NumberFormatException ex) {
-            Alert a = new Alert(Alert.AlertType.ERROR, "Must be an integer.");
-            errorAudio();
-            a.show();
-        }
-
     }
 
     private void deleteValue() {
         try {
-            key = Integer.parseInt(keyText.getText());
-            keyText.setText("");
-            if (bTree.getNode(key) == bTree.nullBTNode) {
-                throw new Exception("Value not found in the tree!");
+            key = Integer.parseInt(keyText.getText());//getting the key from text field
+            keyText.setText("");//removing the number from text field after adding it
+
+            if (bTree.getNode(key) == bTree.nullBTNode) {//throw error if the node is not present in the tree
+                throw new Exception("Node is not present in the tree!");
             }
             bTree.setStepTrees(new LinkedList<BTree<Integer>>());
 
-            bTree.delete(key);
+            bTree.delete(key);//removing from the tree
+            deletedAudio();//playing audio
+
             verticesCount--;
 
             index = 0;
             bTreeLinkedList = bTree.getStepTrees();
-            btPane.paneUpdater(bTreeLinkedList.get(0));
+            btPane.paneUpdater(bTreeLinkedList.get(0));//reprinting the tree
             checker();
         } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Illegal input!", ButtonType.OK);
+            errorAudio();
             alert.show();
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.WARNING, e.getMessage(), ButtonType.OK);
-            alert.show();
-        }
-
-        try {
-            deletedAudio();//
-
-        } catch (NumberFormatException ex) {
-            Alert a = new Alert(Alert.AlertType.ERROR, "Must be an integer.");
             errorAudio();
-            a.show();
+            alert.show();
         }
     }
 
     private void findValue() {
         try {
-            key = Integer.parseInt(keyText.getText());
-            keyText.setText("");
+            key = Integer.parseInt(keyText.getText());//getting the key from text field
+            keyText.setText("");//removing the number from text field after adding it
 
-            btPane.FindNode(bTree, key);
+            btPane.FindNode(bTree, key);//checking the node in the tree
+            foundAudio();//playing audio
 
         } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Illegal input!", ButtonType.OK);
+            errorAudio();
             alert.show();
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.WARNING, e.getMessage(), ButtonType.OK);
-            alert.show();
-        }
-
-        try {
-            foundAudio();//TODO audio not audible
-
-        } catch (NumberFormatException ex) {
-            Alert a = new Alert(Alert.AlertType.ERROR, "Must be an integer.");
             errorAudio();
-            a.show();
+            alert.show();
         }
     }
 
-    private void goPrevious() {
+    private void antecedent() {
         if (index > 0) {
             index--;
-            btPane.paneUpdater(bTreeLinkedList.get(index));
-
+            btPane.paneUpdater(bTreeLinkedList.get(index));//getting to past screen/ reprinting the old tree again
             checker();
         }
     }
 
-    private void goNext() {
+    private void subsequent() {
         if (index < bTreeLinkedList.size() - 1) {
             index++;
-            System.out.println("index: " + index + " - size: " + bTreeLinkedList.size());
-            btPane.paneUpdater(bTreeLinkedList.get(index));
-
+            btPane.paneUpdater(bTreeLinkedList.get(index));//getting to next screen/ printing the new tree
             checker();
         }
     }
 
     private void reset() {
-        keyText.setText("");
+        keyText.setText("");//emptying the text field
 
-        bTree.setRoot(null);
+        bTree.setRoot(null);//setting root to null
         index = 0;
-        bTreeLinkedList.clear();
-        btPane.paneUpdater(bTree);
+        bTreeLinkedList.clear();//emptying the linked list of trees
+        btPane.paneUpdater(bTree);//reprint the tree//here, it will be an empty screen as root node is empty
         checker();
 
         restartAudio();//added audio
