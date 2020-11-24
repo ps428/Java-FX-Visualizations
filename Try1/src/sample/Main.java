@@ -44,7 +44,7 @@ public class Main extends Application {
 
         BorderPane rootPane = new BorderPane();
 
-        // Create button HBox on top
+        // Create button HBox at bottom
         HBox horizontalBox = new HBox(15);
         rootPane.setBottom(horizontalBox);
         BorderPane.setMargin(horizontalBox, new Insets(10, 10, 10, 10));
@@ -93,7 +93,7 @@ public class Main extends Application {
         checker();
 
         // Create TreePane in center
-        btPane = new BTPane(windowWidth / 2, 50, bTree);
+        btPane = new BTPane(windowWidth / 2.0, 50, bTree);
         btPane.setPrefSize(800, 800);
         rootPane.setCenter(btPane);
         btPane.setStyle("-fx-background-color:  #2c2f33;");
@@ -167,10 +167,10 @@ public class Main extends Application {
         if (index > 0 && index < bTreeLinkedList.size() - 1) {//show antecedent and precedent buttons when,
             antecedent.setVisible(true);
             subsequent.setVisible(true);
-        } else if (index > 0 && index == bTreeLinkedList.size() - 1) {
+        } else if (index > 0 && index == bTreeLinkedList.size() - 1) {//don't show subsequent when index==last element
             antecedent.setVisible(true);
             subsequent.setVisible(false);
-        } else if (index == 0 && index < bTreeLinkedList.size() - 1) {
+        } else if (index == 0 && index < bTreeLinkedList.size() - 1) {//when deleted, index is set to 0...allowing subsequent to be printed
             antecedent.setVisible(false);
             subsequent.setVisible(true);
         } else {
@@ -184,18 +184,19 @@ public class Main extends Application {
             key = Integer.parseInt(keyText.getText());//getting the key from text field
             keyText.setText("");//removing the number from text field after adding it
 
-            bTree.setStTrees(new LinkedList<BTree<Integer>>());
+            bTree.setStTrees(new LinkedList<BTree<Integer>>());//make stTree=0..removing prev list data
 
-            bTree.insert(key);//inserting to tree
+            bTree.insert(key);//inserting to tree...stTree is updated when we insert the new key and new stTree will posses the new key as well
             addedAudio();//audio:  audible
             showNotification("Inserted: "+key);
             verticesCount++;
             index = 0;
-            bTreeLinkedList = bTree.getStTrees();
-            btPane.paneUpdater(bTreeLinkedList.get(0));//re printing the tree
+            bTreeLinkedList = bTree.getStTrees();//making the bTreeLinkedList equal to stTree
+            btPane.paneUpdater(bTreeLinkedList.get(0));//re printing the tree...passing root node to paneUpdater
             checker();
         } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Illegal input!", ButtonType.OK);
+            alert.setHeaderText("Error: input");
             errorAudio();
             alert.show();
         }
@@ -223,10 +224,12 @@ public class Main extends Application {
             checker();
         } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Illegal input!", ButtonType.OK);
+            alert.setHeaderText("Error: input");
             errorAudio();
             alert.show();
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.WARNING, e.getMessage(), ButtonType.OK);
+            alert.setHeaderText("Error: "+e.getMessage());
             errorAudio();
             alert.show();
         }
@@ -244,10 +247,12 @@ public class Main extends Application {
 
         } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Illegal input!", ButtonType.OK);
+            alert.setHeaderText("Error: input");
             errorAudio();
             alert.show();
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.WARNING, e.getMessage(), ButtonType.OK);
+            alert.setHeaderText("Error: "+e.getMessage());
             errorAudio();
             alert.show();
         }

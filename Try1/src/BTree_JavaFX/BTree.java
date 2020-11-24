@@ -22,7 +22,7 @@ class BTNode<E extends Comparable<E>> implements Serializable {
 
     //todo imp last internal node
     public boolean trueIfLastInternalNode() {//VERY  IMPORTANT CODE:Checks if the node is last internal node
-        if (keys.size() == 0)//return false if it is a root node
+        if (keys.size() == 0)//return false if it is a empty
             return false;
 
         for (BTNode<E> node : children)
@@ -98,7 +98,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
     int treeSize;
     public BTNode<K> nullBTNode = new BTNode<K>();
 
-     LinkedList<BTree<K>> stTrees = new LinkedList<BTree<K>>();//making a linked list of trees
+     LinkedList<BTree<K>> stTrees = new LinkedList<BTree<K>>();//making a linked list of keys of node
 
     public BTree(int order) {
         if (order < 3) {
@@ -209,7 +209,6 @@ public class BTree<K extends Comparable<K>> implements Serializable {
         return nullBTNode;
     }
 
-    //todo imp getHalfKeys
     BTNode<K> getHalfKeys(K key, BTNode<K> fullNode) {
         int fullNodeSize = fullNode.getSize();
 
@@ -295,7 +294,7 @@ public class BTree<K extends Comparable<K>> implements Serializable {
 
         System.out.println("Enter the key in the middle. This is caused due to overflow");
 
-        stTrees.add(nodeCopy.clone(this));//todo nodeCopy used here
+        stTrees.add(nodeCopy.clone(this));//
     }
 
 

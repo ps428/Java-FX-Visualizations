@@ -34,7 +34,7 @@ public class BTPane extends Pane {
     }
 
     public void paneUpdater(BTree<Integer> bTree) {//just to reprint a new tree with updated values
-        this.getChildren().clear(); // Clear screen & reprint
+        this.getChildren().clear(); // Clear all children of pane & add new ones
         this.bTree = bTree;
         makeBTree(bTree.getRoot(), X, Y); // Call to makeBTree function
     }
